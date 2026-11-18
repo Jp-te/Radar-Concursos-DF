@@ -73,6 +73,30 @@ class Campos(unittest.TestCase):
         self.assertEqual(c.data_da_url("https://x.com/concursos/df/2026/10/26/abc/"), date(2026, 10, 26))
 
 
+class Ajustes(unittest.TestCase):
+    def test_estagio_e_ignorado(self):
+        self.assertTrue(c.TITULO_IGNORAR.search("DF: ANCINE abre seletivo com cadastro reserva para estágio de nível superior"))
+        self.assertTrue(c.TITULO_IGNORAR.search("Órgão abre vagas para estagiários"))
+        self.assertFalse(c.TITULO_IGNORAR.search("Concurso DPDF oferta mais de 700 vagas com iniciais de R$ 11 mil"))
+
+    def test_org_com_verbo_autorizado(self):
+        self.assertEqual(c.org_do_titulo("IBRAM DF é autorizado com 100 vagas para Analista e Técnico"), "IBRAM DF")
+
+    def test_cargo_do_titulo(self):
+        self.assertEqual(c.cargo_do_titulo("IBRAM DF é autorizado com 100 vagas para Analista e Técnico"), "Analista e Técnico")
+        self.assertEqual(c.cargo_do_titulo("Concurso X abre 50 vagas para Auditor com salários de até R$ 20 mil"), "Auditor")
+        titulo = "Câmara dos Deputados publica edital de concurso com 184 vagas e iniciais de R$ 32 mil"
+        self.assertEqual(c.cargo_do_titulo(titulo), titulo)
+
+    def test_reprocessar_item_antigo(self):
+        antigo = {"org": "IBRAM DF é autorizado com 100 vagas para Analista e Técnico",
+                  "cargo": "IBRAM DF é autorizado com 100 vagas para Analista e Técnico", "publicado": "2026-11-17"}
+        novo = c.reprocessar(dict(antigo))
+        self.assertEqual((novo["org"], novo["cargo"]), ("IBRAM DF", "Analista e Técnico"))
+        estagio = {"cargo": "DF: ANCINE abre seletivo com cadastro reserva para estágio de nível superior"}
+        self.assertTrue(c.reprocessar(estagio).get("descartar"))
+
+
 class Materia(unittest.TestCase):
     def setUp(self):
         titulo, texto = c.para_texto(DPDF_HTML)
