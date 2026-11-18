@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-11-18T16:55:33+00:00",
+ "atualizado": "2026-11-18T16:56:17+00:00",
  "concursos": [
   {
    "id": "camara",
@@ -385,42 +385,42 @@
    "nota": "A LDO 2027 prevê recursos para os concursos. Exige graduação em Direito."
   },
   {
-   "id": "auto-6fa83119",
-   "auto": true,
-   "org": "ANCINE",
-   "cargo": "DF: ANCINE abre seletivo com cadastro reserva para estágio em Brasília",
-   "esfera": "Distrito Federal",
-   "nivel": [
-    "superior"
+   "area": [
+    "Saúde"
    ],
+   "auto": true,
+   "banca": "Cebraspe",
+   "cargo": "Concurso IBRAM DF é autorizado com 100 vagas para Analista e Técnico",
+   "esfera": "Distrito Federal",
+   "id": "auto-f6942502",
+   "link": "https://concursosnobrasil.com/concursos/df/2026/10/15/concurso-ibram-df-e-autorizado-com-100-vagas-para-analista-e-tecnico/",
+   "linkTxt": "Matéria com detalhes do edital",
+   "nivel": [],
+   "org": "IBRAM DF é autorizado com 100 vagas para Analista e Técnico",
+   "publicado": "2026-10-15",
+   "vagas": "100 vagas"
+  },
+  {
    "area": [
     "Saúde",
     "TI",
     "Jurídica"
    ],
+   "auto": true,
    "banca": "Cebraspe",
-   "ini": "2026-11-04",
+   "cargo": "DF: ANCINE abre seletivo com cadastro reserva para estágio em Brasília",
+   "esfera": "Distrito Federal",
    "fim": "2026-11-23",
-   "vagas": "50 vagas",
+   "id": "auto-6fa83119",
+   "ini": "2026-11-04",
    "link": "https://concursosnobrasil.com/concursos/df/2026/11/10/ancine-abre-cadastro-reserva-para-estagio-de-nivel-superior/",
    "linkTxt": "Matéria com detalhes do edital",
-   "publicado": "2026-11-10"
-  },
-  {
-   "id": "auto-f6942502",
-   "auto": true,
-   "org": "IBRAM DF é autorizado com 100 vagas para Analista e Técnico",
-   "cargo": "Concurso IBRAM DF é autorizado com 100 vagas para Analista e Técnico",
-   "esfera": "Distrito Federal",
-   "nivel": [],
-   "area": [
-    "Saúde"
+   "nivel": [
+    "superior"
    ],
-   "banca": "Cebraspe",
-   "vagas": "100 vagas",
-   "link": "https://concursosnobrasil.com/concursos/df/2026/10/15/concurso-ibram-df-e-autorizado-com-100-vagas-para-analista-e-tecnico/",
-   "linkTxt": "Matéria com detalhes do edital",
-   "publicado": "2026-10-15"
+   "org": "ANCINE",
+   "publicado": "2026-11-10",
+   "vagas": "50 vagas"
   }
  ]
 }
