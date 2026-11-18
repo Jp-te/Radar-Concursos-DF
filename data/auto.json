@@ -1,1 +1,40 @@
-{}
+{
+ "https://concursosnobrasil.com/concursos/df/2026/10/15/concurso-ibram-df-e-autorizado-com-100-vagas-para-analista-e-tecnico/": {
+  "area": [
+   "Saúde"
+  ],
+  "auto": true,
+  "banca": "Cebraspe",
+  "cargo": "Concurso IBRAM DF é autorizado com 100 vagas para Analista e Técnico",
+  "esfera": "Distrito Federal",
+  "id": "auto-f6942502",
+  "link": "https://concursosnobrasil.com/concursos/df/2026/10/15/concurso-ibram-df-e-autorizado-com-100-vagas-para-analista-e-tecnico/",
+  "linkTxt": "Matéria com detalhes do edital",
+  "nivel": [],
+  "org": "IBRAM DF é autorizado com 100 vagas para Analista e Técnico",
+  "publicado": "2026-10-15",
+  "vagas": "100 vagas"
+ },
+ "https://concursosnobrasil.com/concursos/df/2026/11/10/ancine-abre-cadastro-reserva-para-estagio-de-nivel-superior/": {
+  "area": [
+   "Saúde",
+   "TI",
+   "Jurídica"
+  ],
+  "auto": true,
+  "banca": "Cebraspe",
+  "cargo": "DF: ANCINE abre seletivo com cadastro reserva para estágio em Brasília",
+  "esfera": "Distrito Federal",
+  "fim": "2026-11-23",
+  "id": "auto-6fa83119",
+  "ini": "2026-11-04",
+  "link": "https://concursosnobrasil.com/concursos/df/2026/11/10/ancine-abre-cadastro-reserva-para-estagio-de-nivel-superior/",
+  "linkTxt": "Matéria com detalhes do edital",
+  "nivel": [
+   "superior"
+  ],
+  "org": "ANCINE",
+  "publicado": "2026-11-10",
+  "vagas": "50 vagas"
+ }
+}
