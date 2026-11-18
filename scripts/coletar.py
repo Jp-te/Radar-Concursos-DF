@@ -68,11 +68,12 @@ AREAS = [
 ]
 TITULO_VALIDO = re.compile(r"concurso|seletivo|edital|vagas|inscri", re.I)
 TITULO_IGNORAR = re.compile(
-    r"gabarito|resultado|convoca|retifica|nomea|homologa|aprovados|prorroga|cronograma|local de prova",
+    r"gabarito|resultado|convoca|retifica|nomea|homologa|aprovados|prorroga|cronograma|local de prova"
+    r"|est[aá]gio|estagi[aá]ri",
     re.I,
 )
 VERBOS = (r"publica|divulga|abre|lança|lanca|oferta|oferece|disponibiliza|tem|terá|autoriza|"
-          r"anuncia|libera|confirma|inicia|recebe|seleciona|reabre")
+          r"anuncia|libera|confirma|inicia|recebe|seleciona|reabre|é autorizad[oa]|autorizad[oa]|aprova|prevê")
 
 
 # ---------------------------------------------------------------- rede
@@ -244,6 +245,17 @@ def org_do_titulo(titulo):
     return esquerda or titulo
 
 
+def cargo_do_titulo(titulo):
+    """Tenta pegar os cargos do título ("... 100 vagas para Analista e Técnico")."""
+    m = re.search(r"\bvagas?\s+(?:para|de|em|no|na)\s+(.+?)(?:\s+(?:com|e|,)\s+(?:sal[aá]rios?|ganhos|iniciais|remunera)|$)",
+                  titulo, re.I)
+    if m:
+        cargo = m.group(1).strip(" ,.")
+        if 3 <= len(cargo) <= 90:
+            return cargo[0].upper() + cargo[1:]
+    return titulo
+
+
 def data_da_url(url):
     m = re.search(r"/(\d{4})/(\d{2})/(\d{2})/", url)
     return date(int(m.group(1)), int(m.group(2)), int(m.group(3))) if m else None
@@ -258,8 +270,9 @@ def montar_item(url, titulo, texto, publicado):
     item = {
         "id": "auto-" + hashlib.sha1(url.encode()).hexdigest()[:8],
         "auto": True,
+        "titulo": titulo,
         "org": org_do_titulo(titulo),
-        "cargo": titulo,
+        "cargo": cargo_do_titulo(titulo),
         "esfera": "Distrito Federal",
         "nivel": achar_nivel(texto),
         "area": achar_areas(titulo, texto),
@@ -339,6 +352,19 @@ def vencido(item, hoje):
     return (hoje - pub).days > 45
 
 
+def reprocessar(item):
+    """Aplica as regras atuais a itens guardados por versões antigas do coletor."""
+    if item.get("ignorado"):
+        return item
+    titulo = item.get("titulo") or item.get("cargo", "")
+    if TITULO_IGNORAR.search(titulo):
+        return {"descartar": True}
+    item["titulo"] = titulo
+    item["org"] = org_do_titulo(titulo)
+    item["cargo"] = cargo_do_titulo(titulo)
+    return item
+
+
 def carregar_json(caminho, padrao):
     try:
         return json.loads(caminho.read_text(encoding="utf-8"))
@@ -358,7 +384,8 @@ def main():
     if not args.offline:
         coletar(cache, set(manual.get("ocultar_urls", [])), hoje)
 
-    cache = {u: i for u, i in cache.items() if not vencido(i, hoje)}
+    cache = {u: reprocessar(i) for u, i in cache.items() if not vencido(i, hoje)}
+    cache = {u: i for u, i in cache.items() if not i.get("descartar")}
     auto = [i for i in cache.values() if not i.get("ignorado")]
 
     saida = {
