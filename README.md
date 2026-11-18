@@ -60,4 +60,3 @@ python3 -m http.server -d docs            # abre em http://localhost:8000
 - Trocar a extração por regras por uma chamada a um modelo de linguagem para ler cada matéria, guardando a chave como *secret* do repositório.
 - Acrescentar outras fontes em `LISTAGENS` (por exemplo, páginas de bancas como Cebraspe e Quadrix) com leitores próprios.
 - Avisar por e-mail ou Telegram quando um concurso novo aparecer.
-

@@ -1,0 +1,377 @@
+<title>Radar Concursos DF</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: cartões macios sobre fundo claro esverdeado, painel de prazo embutido em cada cartão.
+   Cores: verde-água como acento, tons pastel para estado. Tipografia única, arredondada e leve. */
+:root {
+  --bg: #f3f6f6;
+  --surface: #ffffff;
+  --fg: #16252b;
+  --muted: #62747b;
+  --line: #e3eaea;
+  --accent: #0f8b8d;
+  --accent-ink: #ffffff;
+  --accent-soft: #ddf2f1;
+  --ok: #1e7a52;
+  --ok-bg: #dff3e8;
+  --warn: #9a5b12;
+  --warn-bg: #fdebd3;
+  --bad: #b4443c;
+  --bad-bg: #fbe3e0;
+  --idle: #5a6b72;
+  --idle-bg: #ebf0f0;
+  --shadow: 0 1px 2px rgba(22, 37, 43, .04), 0 10px 28px rgba(22, 37, 43, .07);
+  --f-display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1618; --surface: #162124; --fg: #e8f0f0; --muted: #93a6ab; --line: #243236;
+    --accent: #4fd1cb; --accent-ink: #05211f; --accent-soft: #123532;
+    --ok: #6fd9a0; --ok-bg: #133526; --warn: #f4bd72; --warn-bg: #3b2b12;
+    --bad: #ff9d94; --bad-bg: #40201d; --idle: #a8b9bd; --idle-bg: #1f2d30;
+    --shadow: 0 10px 28px rgba(0, 0, 0, .35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1618; --surface: #162124; --fg: #e8f0f0; --muted: #93a6ab; --line: #243236;
+  --accent: #4fd1cb; --accent-ink: #05211f; --accent-soft: #123532;
+  --ok: #6fd9a0; --ok-bg: #133526; --warn: #f4bd72; --warn-bg: #3b2b12;
+  --bad: #ff9d94; --bad-bg: #40201d; --idle: #a8b9bd; --idle-bg: #1f2d30;
+  --shadow: 0 10px 28px rgba(0, 0, 0, .35);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font: 400 15px/1.55 var(--f-body);
+  padding-block: 36px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--bg);
+}
+.wrap { max-width: 960px; margin: 0 auto; }
+a { color: var(--accent); text-underline-offset: 3px; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Cabeçalho */
+.top { display: grid; gap: 16px; margin-bottom: 26px; }
+.eyebrow {
+  justify-self: start; font-size: 13px; font-weight: 500; color: var(--accent);
+  background: var(--accent-soft); padding: 6px 14px; border-radius: 999px; text-transform: capitalize;
+}
+h1 {
+  font: 800 clamp(34px, 7vw, 54px)/1.05 var(--f-display);
+  letter-spacing: -.03em; margin: 0; text-wrap: balance;
+}
+h1 span { color: var(--accent); }
+.lede { margin: 0; max-width: 58ch; color: var(--muted); font-size: 17px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; padding-top: 6px; }
+.stat {
+  display: grid; gap: 2px; background: var(--surface); border-radius: 18px;
+  padding: 14px 18px; box-shadow: var(--shadow);
+}
+.stat b { font: 800 30px/1.1 var(--f-display); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.stat small { color: var(--muted); font-size: 13px; }
+
+/* Filtros */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--bg); padding-block: 12px 14px;
+  display: grid; gap: 14px; margin-bottom: 14px;
+}
+@media (max-width: 760px) { .bar { position: static; } }
+.search { display: block; }
+.search input {
+  width: 100%; padding: 14px 20px; border: 0; border-radius: 999px;
+  background: var(--surface); box-shadow: var(--shadow); min-width: 0;
+}
+.search input::placeholder { color: var(--muted); }
+.groups { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: flex-end; }
+.group { display: grid; gap: 8px; min-width: 0; }
+.group > label, .group > span.lab { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 0; background: var(--surface); border-radius: 999px;
+  padding: 8px 16px; cursor: pointer; font-size: 14px; line-height: 1.2; font-weight: 500;
+  box-shadow: 0 1px 2px rgba(22, 37, 43, .06);
+}
+.chip:hover { background: var(--accent-soft); }
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+select {
+  border: 0; background: var(--surface); border-radius: 999px;
+  padding: 9px 16px; max-width: 100%; box-shadow: 0 1px 2px rgba(22, 37, 43, .06);
+}
+.count { font-size: 13px; color: var(--muted); }
+
+/* Lista */
+.list { display: grid; gap: 14px; padding: 0; margin: 0; list-style: none; }
+.sec { font: 700 17px/1.2 var(--f-display); letter-spacing: -.01em; margin: 18px 0 0; padding-left: 4px; }
+.card {
+  background: var(--surface); border-radius: 22px; box-shadow: var(--shadow);
+  display: grid; grid-template-columns: 158px minmax(0, 1fr); gap: 4px; padding: 12px;
+}
+@media (max-width: 640px) { .card { grid-template-columns: minmax(0, 1fr); } }
+.when {
+  padding: 16px; display: grid; align-content: start; gap: 4px;
+  border-radius: 16px; background: var(--idle-bg); color: var(--idle);
+}
+@media (max-width: 640px) {
+  .when { grid-template-columns: auto 1fr; align-items: baseline; gap: 4px 12px; }
+}
+.when .k { font-size: 12px; font-weight: 600; opacity: .85; }
+.when .d { font: 800 32px/1 var(--f-display); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.when .n { font-size: 13px; line-height: 1.3; font-weight: 600; }
+.s-abertas .when { background: var(--ok-bg); color: var(--ok); }
+.s-hoje .when { background: var(--bad-bg); color: var(--bad); }
+.s-semana .when { background: var(--warn-bg); color: var(--warn); }
+.s-breve .when { background: var(--accent-soft); color: var(--accent); }
+.s-encerrada { opacity: .88; }
+
+.body { padding: 10px 12px 8px 14px; display: grid; gap: 14px; min-width: 0; align-content: start; }
+@media (max-width: 640px) { .body { padding: 10px 8px 6px; } }
+.head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.org { font: 700 19px/1.25 var(--f-display); margin: 0; letter-spacing: -.015em; }
+.cargo { margin: 4px 0 0; color: var(--muted); font-size: 14.5px; }
+.save {
+  flex: none; border: 0; background: var(--idle-bg); border-radius: 999px;
+  padding: 7px 14px; cursor: pointer; font-size: 13px; font-weight: 500;
+}
+.save:hover { background: var(--accent-soft); }
+.save[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 12.5px; font-weight: 500; line-height: 1; padding: 6px 11px; border-radius: 999px; background: var(--idle-bg); color: var(--idle); }
+.info { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px 22px; margin: 0; }
+.info div { min-width: 0; }
+.info dt { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 3px; }
+.info dd { margin: 0; font-weight: 500; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.nota { margin: 0; font-size: 13.5px; color: var(--muted); background: var(--bg); padding: 11px 14px; border-radius: 12px; }
+.foot { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-size: 14px; }
+.foot a { font-weight: 600; }
+
+.empty { padding: 40px 20px; border-radius: 22px; background: var(--surface); box-shadow: var(--shadow); text-align: center; color: var(--muted); }
+.empty b { display: block; color: var(--fg); font: 700 18px/1.2 var(--f-display); margin-bottom: 6px; }
+
+.aviso { margin-top: 38px; padding: 18px 22px; border-radius: 18px; background: var(--idle-bg); color: var(--muted); font-size: 13.5px; display: grid; gap: 8px; max-width: 74ch; }
+.aviso p { margin: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .chip, .save { transition: background-color .15s, color .15s; }
+  .card { transition: box-shadow .2s; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow" id="hoje"></div>
+    <h1>Radar <span>Concursos DF</span></h1>
+    <p class="lede">Editais abertos, que começam em breve e previstos para quem mora no Distrito Federal. Escolha sua escolaridade e veja o que você pode fazer.</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section class="bar" aria-label="Filtros">
+    <label class="search"><span hidden>Buscar</span>
+      <input id="q" type="search" placeholder="Buscar órgão, cargo ou banca (ex.: IGESDF, enfermeiro, Cebraspe)" autocomplete="off">
+    </label>
+    <div class="groups">
+      <div class="group" role="group" aria-labelledby="l-sit">
+        <span class="lab" id="l-sit">Situação</span>
+        <div class="chips" id="f-sit"></div>
+      </div>
+      <div class="group" role="group" aria-labelledby="l-niv">
+        <span class="lab" id="l-niv">Minha escolaridade</span>
+        <div class="chips" id="f-niv"></div>
+      </div>
+      <div class="group">
+        <label for="f-area">Área</label>
+        <select id="f-area"></select>
+      </div>
+      <div class="group">
+        <label for="f-ord">Ordenar</label>
+        <select id="f-ord">
+          <option value="prazo">Prazo mais próximo</option>
+          <option value="salario">Maior salário</option>
+        </select>
+      </div>
+    </div>
+    <div class="count" id="count" aria-live="polite"></div>
+  </section>
+
+  <main>
+    <ul class="list" id="list"></ul>
+  </main>
+
+  <footer class="aviso">
+    <p><b id="atualizado">Atualizado todos os dias.</b> Os dados vêm de portais de notícias de concursos e de uma lista curada à mão. Os prazos mudam com retificações de edital: confirme sempre no edital oficial antes de pagar a taxa.</p>
+    <p>Quem tem nível superior também pode disputar vagas de nível médio e técnico, mas cada cargo pode exigir curso, registro em conselho ou experiência específica. Itens "previstos" vêm da LDO 2027 do DF e ainda não têm edital nem data.</p>
+  </footer>
+</div>
+
+<script>
+function iniciar(DATA, atualizado) {
+  var NIVEL = { medio: 1, tecnico: 2, superior: 3 };
+  var NIVEL_LABEL = { medio: "Ensino médio", tecnico: "Técnico", superior: "Superior" };
+
+  var HOJE = new Date(); HOJE.setHours(0, 0, 0, 0);
+  function pd(s) { if (!s) return null; var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function br(s) { var p = s.split("-"); return p[2] + "/" + p[1] + "/" + p[0]; }
+  function dias(a, b) { return Math.round((a - b) / 86400000); }
+  function plural(n, a, b) { return n === 1 ? a : b; }
+
+  function situacao(c) {
+    if (c.tipo === "previsto") return { k: "previsto", cls: "s-previsto", sort: 5000, kick: "Previsão", big: "2027", note: "Sem edital ainda" };
+    var ini = pd(c.ini), fim = pd(c.fim);
+    if (!ini && !fim) return { k: "confirmar", cls: "", sort: 2000, kick: "Prazo", big: "—", note: "A confirmar no edital" };
+    if (ini && HOJE < ini) {
+      var n = dias(ini, HOJE);
+      return { k: "breve", cls: "s-breve", sort: 1000 + n, kick: "Começa em", big: br(c.ini).slice(0, 5), note: n === 1 ? "Amanhã" : "Em " + n + " dias" };
+    }
+    if (!fim || HOJE <= fim) {
+      var d = fim ? dias(fim, HOJE) : 999;
+      var cls = d === 0 ? "s-abertas s-hoje" : d <= 7 ? "s-abertas s-semana" : "s-abertas";
+      var note = d === 0 ? "Último dia hoje" : d === 1 ? "Falta 1 dia" : "Faltam " + d + " dias";
+      return { k: "abertas", cls: cls, sort: d, dias: d, kick: "Inscrições até", big: br(c.fim).slice(0, 5), note: note };
+    }
+    var pv = c.provaData ? pd(c.provaData) : null;
+    var note2 = "Inscrições encerradas";
+    if (pv && pv >= HOJE) { var m = dias(pv, HOJE); note2 = m === 0 ? "Prova hoje" : "Prova em " + m + " " + plural(m, "dia", "dias"); }
+    return { k: "encerrada", cls: "s-encerrada", sort: 4000 - dias(fim, HOJE), kick: "Encerrou em", big: br(c.fim).slice(0, 5), note: note2 };
+  }
+  DATA.forEach(function (c) { c.s = situacao(c); });
+  DATA = DATA.filter(function (c) {
+    if (c.s.k !== "encerrada") return true;
+    if (c.provaData && pd(c.provaData) >= HOJE) return true;
+    return dias(HOJE, pd(c.fim)) <= 60;
+  });
+
+  var SIT = [["todos", "Todos"], ["abertas", "Abertos"], ["breve", "Em breve"], ["previsto", "Previstos"], ["encerrada", "Encerrados"], ["salvos", "Salvos"]];
+  var NIV = [["todas", "Todas"], ["medio", "Médio"], ["tecnico", "Técnico"], ["superior", "Superior"]];
+  var st = { sit: "todos", niv: "todas", area: "todas", ord: "prazo", q: "" };
+
+  var salvos = [];
+  try { salvos = JSON.parse(localStorage.getItem("radar-df-salvos") || "[]"); } catch (e) { salvos = []; }
+  function persist() { try { localStorage.setItem("radar-df-salvos", JSON.stringify(salvos)); } catch (e) {} }
+
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  if (atualizado) {
+    var dt = new Date(atualizado);
+    $("atualizado").textContent = "Atualizado em " + dt.toLocaleDateString("pt-BR") + " às " + dt.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) + ".";
+  }
+  $("hoje").textContent = "Hoje, " + HOJE.toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+
+  // Resumo
+  var abertas = DATA.filter(function (c) { return c.s.k === "abertas"; });
+  var semana = abertas.filter(function (c) { return c.s.dias <= 7; });
+  var breve = DATA.filter(function (c) { return c.s.k === "breve"; });
+  var prev = DATA.filter(function (c) { return c.s.k === "previsto"; });
+  $("stats").innerHTML =
+    '<div class="stat"><b>' + abertas.length + '</b><small>com inscrição aberta</small></div>' +
+    '<div class="stat"><b>' + semana.length + '</b><small>fecham em até 7 dias</small></div>' +
+    '<div class="stat"><b>' + breve.length + '</b><small>começam em breve</small></div>' +
+    '<div class="stat"><b>' + prev.length + '</b><small>previstos para 2027</small></div>';
+
+  // Filtros
+  function chips(el, opts, key) {
+    el.innerHTML = opts.map(function (o) {
+      return '<button type="button" class="chip" data-k="' + key + '" data-v="' + o[0] + '" aria-pressed="' + (st[key] === o[0]) + '">' + o[1] + '</button>';
+    }).join("");
+  }
+  var areas = []; DATA.forEach(function (c) { c.area.forEach(function (a) { if (areas.indexOf(a) < 0) areas.push(a); }); });
+  areas.sort(function (a, b) { return a.localeCompare(b, "pt-BR"); });
+  $("f-area").innerHTML = '<option value="todas">Todas as áreas</option>' + areas.map(function (a) { return '<option value="' + esc(a) + '">' + esc(a) + '</option>'; }).join("");
+
+  function passa(c) {
+    if (st.sit === "salvos") { if (salvos.indexOf(c.id) < 0) return false; }
+    else if (st.sit !== "todos" && c.s.k !== st.sit) return false;
+    if (st.niv !== "todas" && c.nivel.length) {
+      var menor = Math.min.apply(null, c.nivel.map(function (n) { return NIVEL[n]; }));
+      if (menor > NIVEL[st.niv]) return false;
+    }
+    if (st.area !== "todas" && c.area.indexOf(st.area) < 0) return false;
+    if (st.q) {
+      var hay = [c.org, c.cargo, c.banca || "", c.esfera, c.area.join(" ")].join(" ").toLowerCase();
+      if (hay.indexOf(st.q.toLowerCase()) < 0) return false;
+    }
+    return true;
+  }
+
+  function card(c) {
+    var tags = [c.esfera].concat(c.auto ? ["Detectado automaticamente"] : []).concat(c.nivel.length ? c.nivel.map(function (n) { return NIVEL_LABEL[n]; }) : ["Escolaridade a definir"]).concat(c.area);
+    var info = [];
+    if (c.ini && c.fim) info.push(["Inscrições", br(c.ini) + " a " + br(c.fim)]);
+    else if (c.fim) info.push(["Inscrições até", br(c.fim)]);
+    if (c.prova) info.push(["Prova", c.prova]);
+    if (c.vagas) info.push(["Vagas", c.vagas]);
+    if (c.sal) info.push(["Salário", c.sal]);
+    if (c.taxa) info.push(["Taxa", c.taxa]);
+    if (c.banca) info.push(["Banca", c.banca]);
+    var on = salvos.indexOf(c.id) >= 0;
+    return '<li class="card ' + c.s.cls + '">' +
+      '<div class="when"><span class="k">' + c.s.kick + '</span><span class="d">' + c.s.big + '</span><span class="n">' + c.s.note + '</span></div>' +
+      '<div class="body">' +
+        '<div class="head"><div><h2 class="org">' + esc(c.org) + '</h2><p class="cargo">' + esc(c.cargo) + '</p></div>' +
+        '<button type="button" class="save" data-id="' + c.id + '" aria-pressed="' + on + '">' + (on ? "Salvo" : "Salvar") + '</button></div>' +
+        '<div class="tags">' + tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join("") + '</div>' +
+        '<dl class="info">' + info.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join("") + '</dl>' +
+        (c.nota || c.auto ? '<p class="nota">' + esc(c.nota || "Dados extraídos automaticamente da matéria. Confira prazos, vagas e requisitos no edital.") + '</p>' : '') +
+        '<div class="foot"><a href="' + c.link + '" target="_blank" rel="noopener">' + esc(c.linkTxt) + ' ↗</a></div>' +
+      '</div></li>';
+  }
+
+  var SEC = { abertas: "Inscrições abertas", breve: "Começam em breve", confirmar: "Prazo a confirmar", encerrada: "Encerrados, com prova ou resultado pela frente", previsto: "Previstos, sem edital" };
+
+  function render() {
+    var items = DATA.filter(passa);
+    if (st.ord === "salario") items.sort(function (a, b) { return (b.salN || 0) - (a.salN || 0); });
+    else items.sort(function (a, b) { return a.s.sort - b.s.sort; });
+    $("count").textContent = items.length + " " + plural(items.length, "concurso encontrado", "concursos encontrados");
+    if (!items.length) {
+      $("list").innerHTML = '<li class="empty"><b>Nada por aqui com esses filtros</b>' +
+        (st.sit === "salvos" ? "Use o botão Salvar nos concursos que quiser acompanhar." : "Tente outra escolaridade, área ou limpe a busca.") + '</li>';
+      return;
+    }
+    var html = "", last = "";
+    items.forEach(function (c) {
+      if (st.ord === "prazo" && c.s.k !== last) { html += '<li class="sec" role="presentation">' + SEC[c.s.k] + '</li>'; last = c.s.k; }
+      html += card(c);
+    });
+    $("list").innerHTML = html;
+  }
+
+  function renderChips() { chips($("f-sit"), SIT, "sit"); chips($("f-niv"), NIV, "niv"); }
+
+  document.addEventListener("click", function (e) {
+    var ch = e.target.closest(".chip");
+    if (ch) { st[ch.dataset.k] = ch.dataset.v; renderChips(); render(); return; }
+    var sv = e.target.closest(".save");
+    if (sv) {
+      var i = salvos.indexOf(sv.dataset.id);
+      if (i >= 0) salvos.splice(i, 1); else salvos.push(sv.dataset.id);
+      persist(); render();
+    }
+  });
+  $("q").addEventListener("input", function (e) { st.q = e.target.value.trim(); render(); });
+  $("f-area").addEventListener("change", function (e) { st.area = e.target.value; render(); });
+  $("f-ord").addEventListener("change", function (e) { st.ord = e.target.value; render(); });
+
+  renderChips(); render();
+}
+
+fetch("dados.json", { cache: "no-cache" })
+  .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(function (j) { iniciar(j.concursos || [], j.atualizado); })
+  .catch(function () {
+    document.getElementById("list").innerHTML =
+      '<li class="empty"><b>Não consegui carregar os concursos</b>Se você abriu o arquivo direto do computador, rode "python3 -m http.server -d docs" e acesse localhost:8000.</li>';
+  });
+</script>
