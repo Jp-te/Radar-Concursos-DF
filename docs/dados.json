@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-11-18T17:07:26+00:00",
+ "atualizado": "2026-11-18T17:08:15+00:00",
  "concursos": [
   {
    "id": "camara",
@@ -398,8 +398,8 @@
    "nivel": [],
    "org": "IBRAM DF",
    "publicado": "2026-10-15",
-   "vagas": "100 vagas",
-   "titulo": "Concurso IBRAM DF é autorizado com 100 vagas para Analista e Técnico"
+   "titulo": "Concurso IBRAM DF é autorizado com 100 vagas para Analista e Técnico",
+   "vagas": "100 vagas"
   }
  ]
 }
