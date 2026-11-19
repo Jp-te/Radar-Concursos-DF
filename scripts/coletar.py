@@ -35,6 +35,16 @@ LISTAGENS = [
 ]
 SITE_URL = "https://jp-te.github.io/Radar-Concursos-DF/"
 RE_MENCAO_DF = re.compile(r"bras[ií]lia|distrito federal|\(DF\)|\bDF\b", re.I)
+RE_MENCAO_DF_NACIONAL = re.compile(r"bras[ií]lia|distrito federal|\(DF\)", re.I)
+# Título com outro estado entre parênteses, como "MGS (MG)", indica concurso de fora do DF.
+RE_OUTRA_UF = re.compile(r"\((AC|AL|AP|AM|BA|CE|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO)\)")
+
+
+def relevante_nacional(titulo, texto):
+    """Matéria nacional só interessa se citar Brasília ou o DF e não for de outro estado."""
+    if RE_OUTRA_UF.search(titulo):
+        return False
+    return bool(RE_MENCAO_DF_NACIONAL.search(titulo + " " + texto))
 UA = "RadarConcursosDF/1.0 (projeto pessoal de acompanhamento de concursos)"
 MAX_ARTIGOS = 20      # limite de matérias novas por execução
 JANELA_DIAS = 120     # ignora matérias mais antigas que isso
@@ -346,7 +356,7 @@ def coletar(cache, ocultar, hoje):
         if not titulo or not TITULO_VALIDO.search(titulo) or TITULO_IGNORAR.search(titulo):
             cache[u] = {"ignorado": True, "publicado": d.isoformat()}  # não olhar de novo
             continue
-        if not eh_regional(u) and not RE_MENCAO_DF.search(titulo + " " + texto):
+        if not eh_regional(u) and not relevante_nacional(titulo, texto):
             cache[u] = {"ignorado": True, "publicado": d.isoformat()}  # nacional sem vagas no DF
             continue
         cache[u] = montar_item(u, titulo, texto, d)
@@ -368,12 +378,33 @@ def vencido(item, hoje):
     return (hoje - pub).days > 45
 
 
+def _norm(txt):
+    import unicodedata
+    t = unicodedata.normalize("NFKD", txt or "").encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", " ", t).strip()
+
+
+def duplicado(auto, manuais):
+    """Item automático que repete um item cadastrado à mão: mesmo órgão e mesmo prazo (ou prazo desconhecido)."""
+    org = _norm(auto.get("org"))
+    if not org:
+        return False
+    for m in manuais:
+        if org not in _norm(m.get("org")) and _norm(m.get("org")) not in org:
+            continue
+        if not auto.get("fim") or auto.get("fim") == m.get("fim") or (auto.get("ini") and auto.get("ini") == m.get("ini")):
+            return True
+    return False
+
+
 def reprocessar(item):
     """Aplica as regras atuais a itens guardados por versões antigas do coletor."""
     if item.get("ignorado"):
         return item
     titulo = item.get("titulo") or item.get("cargo", "")
     if TITULO_IGNORAR.search(titulo):
+        return {"descartar": True}
+    if not eh_regional(item.get("link", "")) and RE_OUTRA_UF.search(titulo):
         return {"descartar": True}
     item["titulo"] = titulo
     item["org"] = org_do_titulo(titulo)
@@ -481,8 +512,9 @@ def main():
 
     cache = {u: reprocessar(i) for u, i in cache.items() if not vencido(i, hoje)}
     cache = {u: i for u, i in cache.items() if not i.get("descartar")}
-    auto = [i for i in cache.values() if not i.get("ignorado")]
-    todos = manual.get("concursos", []) + auto
+    manuais = manual.get("concursos", [])
+    auto = [i for i in cache.values() if not i.get("ignorado") and not duplicado(i, manuais)]
+    todos = manuais + auto
 
     saida = {
         "atualizado": datetime.now(timezone.utc).isoformat(timespec="seconds"),

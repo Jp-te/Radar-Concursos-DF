@@ -424,6 +424,7 @@ function iniciar(DATA, meta) {
       var d = fim ? dias(fim, HOJE) : 999;
       var cls = d === 0 ? "s-abertas s-hoje" : d <= 7 ? "s-abertas s-semana" : "s-abertas";
       var note = d === 0 ? "Último dia hoje" : d === 1 ? "Falta 1 dia" : "Faltam " + d + " dias";
+      if (!fim) return { k: "abertas", cls: "s-abertas", sort: 900, kick: "Inscrições", big: "Abertas", note: "Prazo a confirmar no edital" };
       return { k: "abertas", cls: cls, sort: d, dias: d, kick: "Inscrições até", big: br(c.fim).slice(0, 5), note: note };
     }
     var pv = provaIso(c) ? pd(provaIso(c)) : null;
@@ -431,7 +432,11 @@ function iniciar(DATA, meta) {
     if (pv && pv >= HOJE) { var m = dias(pv, HOJE); note2 = m === 0 ? "Prova hoje" : "Prova em " + m + " " + plural(m, "dia", "dias"); }
     return { k: "encerrada", cls: "s-encerrada", sort: 4000 - dias(fim, HOJE), kick: "Encerrou em", big: br(c.fim).slice(0, 5), note: note2 };
   }
-  DATA.forEach(function (c) { c.nivel = c.nivel || []; c.area = c.area || []; c.s = situacao(c); });
+  // Um item com dados estranhos não pode derrubar o site inteiro: ele é pulado.
+  DATA = DATA.filter(function (c) {
+    try { c.nivel = c.nivel || []; c.area = c.area || []; c.s = situacao(c); return true; }
+    catch (e) { console.warn("Item ignorado:", c && c.id, e); return false; }
+  });
   DATA = DATA.filter(function (c) {
     if (c.s.k !== "encerrada") return true;
     var pv = provaIso(c);

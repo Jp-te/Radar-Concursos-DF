@@ -117,6 +117,29 @@ class Fontes(unittest.TestCase):
         self.assertIn("Nacional", item["esfera"])
 
 
+class Qualidade(unittest.TestCase):
+    def test_nacional_de_outro_estado_nao_entra(self):
+        self.assertFalse(c.relevante_nacional("MGS (MG) abre 643 vagas e oferece remuneração de até R$ 4,5 mil", "Vagas em Brasília e BH"))
+
+    def test_nacional_com_brasilia_entra(self):
+        self.assertTrue(c.relevante_nacional("Ministério da Saúde abre processo seletivo", "Vagas em Brasília, Goiânia e Recife."))
+        self.assertFalse(c.relevante_nacional("Prefeitura abre vagas", "Vagas em Campinas."))
+
+    def test_reprocessar_descarta_outro_estado(self):
+        item = {"link": "https://concursosnobrasil.com/concursos/2026/10/21/mgs/", "cargo": "MGS (MG) abre 643 vagas"}
+        self.assertTrue(c.reprocessar(item).get("descartar"))
+
+    def test_duplicado_mesmo_orgao_e_prazo(self):
+        manuais = [{"org": "Rede SARAH · Editais 13 e 14/2026", "ini": "2026-11-23", "fim": "2026-12-17"},
+                   {"org": "Controladoria-Geral da União (CGU)", "fim": "2026-11-04"},
+                   {"org": "IGESDF · Edital 120/2026", "ini": "2026-11-09", "fim": "2026-11-18"}]
+        self.assertTrue(c.duplicado({"org": "Rede SARAH", "ini": "2026-11-23", "fim": "2026-12-17"}, manuais))
+        self.assertTrue(c.duplicado({"org": "CGU", "ini": "2026-10-10"}, manuais))  # sem fim: considera repetido
+        # novo edital do mesmo órgão com outro prazo não é repetido
+        self.assertFalse(c.duplicado({"org": "IGESDF", "ini": "2026-11-20", "fim": "2026-11-30"}, manuais))
+        self.assertFalse(c.duplicado({"org": "Órgão novo", "fim": "2026-11-30"}, manuais))
+
+
 class Avisos(unittest.TestCase):
     HOJE = date(2026, 11, 18)
     A = {"id": "a", "org": "Órgão A", "cargo": "Cargo & Cia", "ini": "2026-11-10", "fim": "2026-11-21", "vagas": "10", "sal": "R$ 5.000,00"}
