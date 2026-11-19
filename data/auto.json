@@ -1,4 +1,133 @@
 {
+ "https://concursosnobrasil.com/concursos/2026/08/05/ministerio-da-saude-define-banca-organizadora-de-proximo-seletivo/": {
+  "ignorado": true,
+  "publicado": "2026-08-05"
+ },
+ "https://concursosnobrasil.com/concursos/2026/09/29/ibge-prepara-selecao-com-ate-27-330-novas-vagas-para-recenseador/": {
+  "ignorado": true,
+  "publicado": "2026-09-29"
+ },
+ "https://concursosnobrasil.com/concursos/2026/10/09/concurso-cgu-publica-edital-com-428-vagas-para-auditor-federal-e-salario-de-r-20-mil/": {
+  "area": [
+   "TI",
+   "Controle e fiscal",
+   "Educação"
+  ],
+  "auto": true,
+  "banca": "Cebraspe",
+  "cargo": "Auditor Federal",
+  "esfera": "Nacional, com vagas em Brasília",
+  "id": "auto-d325c242",
+  "ini": "2026-10-10",
+  "link": "https://concursosnobrasil.com/concursos/2026/10/09/concurso-cgu-publica-edital-com-428-vagas-para-auditor-federal-e-salario-de-r-20-mil/",
+  "linkTxt": "Matéria com detalhes do edital",
+  "nivel": [
+   "superior"
+  ],
+  "org": "CGU",
+  "publicado": "2026-10-09",
+  "taxa": "R$ 170,00",
+  "titulo": "Concurso CGU publica edital com 60 vagas para Auditor Federal e salário de R$ 20 mil",
+  "vagas": "60 vagas"
+ },
+ "https://concursosnobrasil.com/concursos/2026/10/16/processo-seletivo-mgs-mg-abre-643-vagas-e-oferece-remuneracao-de-ate-r-39-mil/": {
+  "area": [
+   "Saúde",
+   "Engenharia e transporte"
+  ],
+  "auto": true,
+  "banca": "IBFC",
+  "cargo": "MGS (MG) abre 643 vagas e oferece remuneração de até R$ 4,5 mil",
+  "esfera": "Nacional, com vagas em Brasília",
+  "fim": "2026-11-09",
+  "id": "auto-39064a24",
+  "ini": "2026-10-21",
+  "link": "https://concursosnobrasil.com/concursos/2026/10/16/processo-seletivo-mgs-mg-abre-643-vagas-e-oferece-remuneracao-de-ate-r-39-mil/",
+  "linkTxt": "Matéria com detalhes do edital",
+  "nivel": [
+   "medio",
+   "tecnico",
+   "superior"
+  ],
+  "org": "MGS (MG)",
+  "prova": "13/12/2026 (data provável)",
+  "provaData": "2026-12-13",
+  "publicado": "2026-10-16",
+  "sal": "R$ 1.185,69",
+  "salN": 1185.69,
+  "taxa": "R$ 60,36",
+  "titulo": "MGS (MG) abre 643 vagas e oferece remuneração de até R$ 4,5 mil",
+  "vagas": "643 vagas"
+ },
+ "https://concursosnobrasil.com/concursos/2026/10/22/estagio-pge-rs-abre-32-vagas-para-pos-graduacao-com-bolsa-de-r-28-mil/": {
+  "ignorado": true,
+  "publicado": "2026-10-22"
+ },
+ "https://concursosnobrasil.com/concursos/2026/10/26/concurso-trf-3a-regiao-abre-11-vagas-com-remuneracoes-de-ate-r-20-mil/": {
+  "ignorado": true,
+  "publicado": "2026-10-26"
+ },
+ "https://concursosnobrasil.com/concursos/2026/11/05/processo-seletivo-hu-brasil-abre-80-vagas-para-medicos-com-salario-de-r-119-mil/": {
+  "ignorado": true,
+  "publicado": "2026-11-05"
+ },
+ "https://concursosnobrasil.com/concursos/2026/11/12/ministerio-da-saude-abre-processo-seletivo-com-300-vagas-e-salarios-de-ate-r-103-mil/": {
+  "area": [
+   "Saúde",
+   "TI",
+   "Jurídica"
+  ],
+  "auto": true,
+  "cargo": "Ministério da Saúde abre processo seletivo com 759 vagas e salários de até R$ 10,3 mil",
+  "esfera": "Nacional, com vagas em Brasília",
+  "fim": "2026-12-14",
+  "id": "auto-934a7467",
+  "ini": "2026-11-12",
+  "link": "https://concursosnobrasil.com/concursos/2026/11/12/ministerio-da-saude-abre-processo-seletivo-com-300-vagas-e-salarios-de-ate-r-103-mil/",
+  "linkTxt": "Matéria com detalhes do edital",
+  "nivel": [
+   "superior"
+  ],
+  "org": "Ministério da Saúde",
+  "prova": "17/01/2027 (data provável)",
+  "provaData": "2027-01-17",
+  "publicado": "2026-11-12",
+  "sal": "R$ 4.740,51",
+  "salN": 4740.51,
+  "taxa": "R$ 60,00",
+  "titulo": "Ministério da Saúde abre processo seletivo com 759 vagas e salários de até R$ 10,3 mil",
+  "vagas": "459 vagas"
+ },
+ "https://concursosnobrasil.com/concursos/2026/11/13/rede-sarah-lanca-dois-seletivos-com-salarios-de-ate-r-149-mil/": {
+  "area": [
+   "TI",
+   "Engenharia e transporte"
+  ],
+  "auto": true,
+  "cargo": "Rede SARAH lança dois seletivos com salários de até R$ 14,9 mil",
+  "esfera": "Nacional, com vagas em Brasília",
+  "fim": "2026-12-17",
+  "id": "auto-8b883393",
+  "ini": "2026-11-23",
+  "link": "https://concursosnobrasil.com/concursos/2026/11/13/rede-sarah-lanca-dois-seletivos-com-salarios-de-ate-r-149-mil/",
+  "linkTxt": "Matéria com detalhes do edital",
+  "nivel": [
+   "superior"
+  ],
+  "org": "Rede SARAH",
+  "prova": "31/01/2027 (data provável)",
+  "provaData": "2027-01-31",
+  "publicado": "2026-11-13",
+  "sal": "R$ 14.972,56",
+  "salN": 14972.56,
+  "taxa": "R$ 120,00",
+  "titulo": "Rede SARAH lança dois seletivos com salários de até R$ 14,9 mil",
+  "vagas": "13 vagas"
+ },
+ "https://concursosnobrasil.com/concursos/2026/11/18/concurso-anpd-com-50-vagas-e-salario-de-r-177-mil-sera-organizado-pelo-cebraspe/": {
+  "ignorado": true,
+  "publicado": "2026-11-18"
+ },
  "https://concursosnobrasil.com/concursos/df/2026/10/15/concurso-ibram-df-e-autorizado-com-100-vagas-para-analista-e-tecnico/": {
   "area": [
    "Saúde"
