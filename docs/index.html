@@ -227,7 +227,7 @@ function iniciar(DATA, atualizado) {
   function plural(n, a, b) { return n === 1 ? a : b; }
 
   function situacao(c) {
-    if (c.tipo === "previsto") return { k: "previsto", cls: "s-previsto", sort: 5000, kick: "Previsão", big: "2027", note: "Sem edital ainda" };
+    if (c.tipo === "previsto") return { k: "previsto", cls: "s-previsto", sort: 5000, kick: "Previsão", big: c.previsao || "2027", note: c.previsaoNota || "Sem edital ainda" };
     var ini = pd(c.ini), fim = pd(c.fim);
     if (!ini && !fim) return { k: "confirmar", cls: "", sort: 2000, kick: "Prazo", big: "—", note: "A confirmar no edital" };
     if (ini && HOJE < ini) {
@@ -278,7 +278,7 @@ function iniciar(DATA, atualizado) {
     '<div class="stat"><b>' + abertas.length + '</b><small>com inscrição aberta</small></div>' +
     '<div class="stat"><b>' + semana.length + '</b><small>fecham em até 7 dias</small></div>' +
     '<div class="stat"><b>' + breve.length + '</b><small>começam em breve</small></div>' +
-    '<div class="stat"><b>' + prev.length + '</b><small>previstos para 2027</small></div>';
+    '<div class="stat"><b>' + prev.length + '</b><small>previstos, sem edital</small></div>';
 
   // Filtros
   function chips(el, opts, key) {
