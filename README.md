@@ -28,6 +28,16 @@ Depois disso ele roda sozinho todo dia às 6h (horário de Brasília) e a cada `
 - **Compartilhar e lembrar:** botão de WhatsApp, copiar link e "Adicionar ao calendário" (arquivo .ics com lembrete um dia antes).
 - **Confiança nos dados:** selo "Conferido em dd/mm" em cada item, link do edital oficial quando cadastrado e status da última coleta no rodapé.
 
+## Instalar como app no celular
+
+O site é um app instalável (PWA) e funciona sem internet, mostrando os últimos dados carregados.
+
+- **Android (Chrome):** abra o site, toque no botão **Instalar o app** que aparece no topo (ou no menu ⋮ → Instalar app).
+- **iPhone (Safari):** toque em **Compartilhar** e escolha **Adicionar à Tela de Início**.
+- **Computador (Chrome ou Edge):** clique no ícone de instalar na barra de endereço.
+
+Quando você publicar uma versão nova do site, o app pega a versão nova na próxima vez que abrir com internet. Se mudar o `sw.js`, troque o texto de `VERSAO` nele (por exemplo `radar-v2`) para limpar os arquivos guardados.
+
 ## Avisos no Telegram (opcional)
 
 O robô pode avisar quando um concurso novo entra na lista e lembrar 3 dias, 1 dia e no último dia de inscrição.
@@ -56,6 +66,7 @@ Sem os dois segredos, nada é enviado e o resto funciona normalmente.
 | `data/auto.json` | Memória do coletor entre as execuções (o robô atualiza). |
 | `docs/dados.json` | Resultado final que o site lê (manual + automático). |
 | `docs/index.html` | O site. Calcula situação e contagem de dias com a data de quem abre. |
+| `docs/manifest.webmanifest`, `docs/sw.js`, `docs/icon-*.png` | Fazem o site virar app instalável e abrir offline. |
 | `.github/workflows/atualizar.yml` | Agendamento diário, testes, coleta e publicação. |
 
 O que aparece no site com o selo **Detectado automaticamente** foi extraído do texto de uma matéria por regras simples. Ele traz o link da matéria, mas confira sempre no edital.
