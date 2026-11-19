@@ -2,8 +2,8 @@ name: Atualizar e publicar
 
 on:
   schedule:
-    - cron: "0 9 * * *"
-  workflow_dispatch:
+    - cron: "0 9 * * *"   # todo dia às 06h no horário de Brasília (09h UTC)
+  workflow_dispatch:       # botão "Run workflow" na aba Actions
   push:
     branches: [main]
 
@@ -34,6 +34,9 @@ jobs:
 
       - name: Coletar concursos
         run: python scripts/coletar.py
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
       - name: Guardar o que foi coletado
         run: |
