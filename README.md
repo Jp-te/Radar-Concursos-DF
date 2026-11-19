@@ -55,7 +55,7 @@ Sem os dois segredos, nada é enviado e o resto funciona normalmente.
 1. Registre um domínio (por exemplo em registro.br).
 2. Em **Settings → Pages → Custom domain**, digite o domínio e salve. O GitHub cria o arquivo `CNAME` sozinho.
 3. No painel do domínio, aponte o DNS conforme a tela do GitHub (registros A ou CNAME) e marque **Enforce HTTPS**.
-4. Troque `https://jp-te.github.io/Radar-Concursos-DF/` pelo novo endereço em `docs/index.html` (tags `og:url` e `og:image`) e em `SITE_URL` no `scripts/coletar.py`.
+4. Troque `https://radarconcursosdf.github.io/` pelo novo endereço em `docs/index.html` (tags `og:url` e `og:image`) e em `SITE_URL` no `scripts/coletar.py`.
 
 ## Como funciona
 

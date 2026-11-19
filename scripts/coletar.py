@@ -33,7 +33,7 @@ LISTAGENS = [
     # Matérias nacionais (ministérios, agências): só entram se citarem Brasília ou o DF.
     "https://concursosnobrasil.com/concursos/",
 ]
-SITE_URL = "https://jp-te.github.io/Radar-Concursos-DF/"
+SITE_URL = "https://radarconcursosdf.github.io/"
 RE_MENCAO_DF = re.compile(r"bras[ií]lia|distrito federal|\(DF\)|\bDF\b", re.I)
 RE_MENCAO_DF_NACIONAL = re.compile(r"bras[ií]lia|distrito federal|\(DF\)", re.I)
 # Título com outro estado entre parênteses, como "MGS (MG)", indica concurso de fora do DF.
