@@ -19,11 +19,39 @@ Site que acompanha os concursos abertos, em breve e previstos no Distrito Federa
 
 Depois disso ele roda sozinho todo dia às 6h (horário de Brasília) e a cada `push`.
 
+## O que o site tem
+
+- **Filtros:** situação, escolaridade, área ou formação, faixa de salário, busca por órgão, cargo ou banca, e ordenação por prazo ou salário.
+- **Fecham nos próximos 7 dias:** faixa no topo com o que está acabando.
+- **Calendário:** visão mensal com abertura de inscrições, fim das inscrições e provas. Clique em um dia para ver só os eventos dele.
+- **Página de cada concurso:** endereço `#concurso=ID`, com cronograma, informações, o que conferir no edital e links. O endereço pode ser compartilhado.
+- **Compartilhar e lembrar:** botão de WhatsApp, copiar link e "Adicionar ao calendário" (arquivo .ics com lembrete um dia antes).
+- **Confiança nos dados:** selo "Conferido em dd/mm" em cada item, link do edital oficial quando cadastrado e status da última coleta no rodapé.
+
+## Avisos no Telegram (opcional)
+
+O robô pode avisar quando um concurso novo entra na lista e lembrar 3 dias, 1 dia e no último dia de inscrição.
+
+1. No Telegram, converse com o **@BotFather**, envie `/newbot` e siga as perguntas. Ele devolve um **token** (guarde em segredo).
+2. Crie um **canal** público (por exemplo `Radar Concursos DF`), adicione o bot como **administrador** com permissão de publicar mensagens.
+3. O identificador do canal é `@nome_do_canal` (o nome do link público).
+4. No repositório do GitHub, abra **Settings → Secrets and variables → Actions → New repository secret** e crie dois segredos: `TELEGRAM_BOT_TOKEN` (o token) e `TELEGRAM_CHAT_ID` (por exemplo `@radar_concursos_df`).
+5. Em `data/manual.json`, preencha `"telegram": "https://t.me/nome_do_canal"` para o site mostrar o botão "Receber avisos no Telegram".
+
+Sem os dois segredos, nada é enviado e o resto funciona normalmente.
+
+## Endereço próprio (opcional)
+
+1. Registre um domínio (por exemplo em registro.br).
+2. Em **Settings → Pages → Custom domain**, digite o domínio e salve. O GitHub cria o arquivo `CNAME` sozinho.
+3. No painel do domínio, aponte o DNS conforme a tela do GitHub (registros A ou CNAME) e marque **Enforce HTTPS**.
+4. Troque `https://jp-te.github.io/Radar-Concursos-DF/` pelo novo endereço em `docs/index.html` (tags `og:url` e `og:image`) e em `SITE_URL` no `scripts/coletar.py`.
+
 ## Como funciona
 
 | Arquivo | Para que serve |
 | --- | --- |
-| `data/manual.json` | Concursos que você mantém à mão: previstos da LDO, editais que o coletor não entende bem, correções. |
+| `data/manual.json` | Concursos que você mantém à mão: previstos, editais que o coletor não entende bem, correções. Campos úteis: `conferido` (data da última conferência), `edital` (link oficial), `telegram` (link do canal). |
 | `scripts/coletar.py` | Lê as matérias novas de concursos do DF, extrai prazo, vagas, salário, banca, escolaridade e área, e grava em `data/auto.json`. |
 | `data/auto.json` | Memória do coletor entre as execuções (o robô atualiza). |
 | `docs/dados.json` | Resultado final que o site lê (manual + automático). |
@@ -49,7 +77,7 @@ python3 -m http.server -d docs            # abre em http://localhost:8000
 
 ## Limites que valem saber
 
-- **Fonte única:** a coleta lê a seção de Distrito Federal do portal Concursos no Brasil. Se o portal mudar o endereço ou o layout, o coletor não acha matérias novas. O workflow continua funcionando, mas aparece um aviso amarelo na execução.
+- **Fonte única:** a coleta lê o portal Concursos no Brasil (seção do DF e matérias nacionais que citam Brasília ou o DF). Se o portal mudar o endereço ou o layout, o coletor não acha matérias novas. O workflow continua funcionando, mas aparece um aviso amarelo na execução.
 - **Uma matéria, um item:** quando uma matéria trata de vários editais (como as do IGESDF), o item automático pega só o primeiro prazo. Para detalhar, cadastre cada edital em `manual.json` e oculte a matéria.
 - **Extração por regras:** funciona bem para textos no padrão "inscrições de 9 a 18 de novembro de 2026". Frases fora desse padrão ficam sem data e o item aparece em "Prazo a confirmar".
 - **Respeito ao site de origem:** o coletor lê poucas páginas por dia, com pausa entre elas e identificação própria. Não aumente a frequência sem necessidade.

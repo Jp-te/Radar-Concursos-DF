@@ -1,4 +1,5 @@
 {
+  "telegram": "",
   "ocultar_urls": [
     "https://concursosnobrasil.com/concursos/df/2026/10/02/camara-dos-deputados-publica-edital-de-concurso-com-184-vagas-e-iniciais-de-r-32-mil/",
     "https://concursosnobrasil.com/concursos/df/2026/10/26/concurso-dpdf-oferta-mais-de-700-vagas-com-iniciais-de-r-11-mil/",
@@ -30,7 +31,8 @@
       "salN": 32070.88,
       "taxa": "R$ 130,00",
       "link": "https://concursosnobrasil.com/concursos/df/2026/10/02/camara-dos-deputados-publica-edital-de-concurso-com-184-vagas-e-iniciais-de-r-32-mil/",
-      "linkTxt": "Matéria com detalhes do edital"
+      "linkTxt": "Matéria com detalhes do edital",
+      "conferido": "2026-11-18"
     },
     {
       "id": "iges120",
@@ -52,7 +54,9 @@
       "salN": 4894.57,
       "link": "https://processoseletivo.igesdf.org.br/vagas",
       "linkTxt": "Portal de inscrição do IGESDF",
-      "nota": "Processo seletivo para formação de cadastro reserva. Inscrição pelo portal do IGESDF; a escolha do edital define prazo e prova."
+      "nota": "Processo seletivo para formação de cadastro reserva. Inscrição pelo portal do IGESDF; a escolha do edital define prazo e prova.",
+      "conferido": "2026-11-17",
+      "edital": "https://processoseletivo.igesdf.org.br/vagas"
     },
     {
       "id": "iges121",
@@ -73,7 +77,9 @@
       "sal": "R$ 13.359,56",
       "salN": 13359.56,
       "link": "https://processoseletivo.igesdf.org.br/vagas",
-      "linkTxt": "Portal de inscrição do IGESDF"
+      "linkTxt": "Portal de inscrição do IGESDF",
+      "conferido": "2026-11-17",
+      "edital": "https://processoseletivo.igesdf.org.br/vagas"
     },
     {
       "id": "iges122",
@@ -94,7 +100,9 @@
       "sal": "R$ 2.294,50",
       "salN": 2294.5,
       "link": "https://processoseletivo.igesdf.org.br/vagas",
-      "linkTxt": "Portal de inscrição do IGESDF"
+      "linkTxt": "Portal de inscrição do IGESDF",
+      "conferido": "2026-11-17",
+      "edital": "https://processoseletivo.igesdf.org.br/vagas"
     },
     {
       "id": "iges123",
@@ -115,7 +123,9 @@
       "sal": "R$ 8.953,27",
       "salN": 8953.27,
       "link": "https://processoseletivo.igesdf.org.br/vagas",
-      "linkTxt": "Portal de inscrição do IGESDF"
+      "linkTxt": "Portal de inscrição do IGESDF",
+      "conferido": "2026-11-17",
+      "edital": "https://processoseletivo.igesdf.org.br/vagas"
     },
     {
       "id": "iges124",
@@ -136,7 +146,9 @@
       "sal": "R$ 13.359,56",
       "salN": 13359.56,
       "link": "https://processoseletivo.igesdf.org.br/vagas",
-      "linkTxt": "Portal de inscrição do IGESDF"
+      "linkTxt": "Portal de inscrição do IGESDF",
+      "conferido": "2026-11-17",
+      "edital": "https://processoseletivo.igesdf.org.br/vagas"
     },
     {
       "id": "iges125",
@@ -157,7 +169,9 @@
       "sal": "R$ 13.359,56",
       "salN": 13359.56,
       "link": "https://processoseletivo.igesdf.org.br/vagas",
-      "linkTxt": "Portal de inscrição do IGESDF"
+      "linkTxt": "Portal de inscrição do IGESDF",
+      "conferido": "2026-11-17",
+      "edital": "https://processoseletivo.igesdf.org.br/vagas"
     },
     {
       "id": "dpdf",
@@ -182,7 +196,9 @@
       "taxa": "R$ 110,00",
       "link": "https://access.selecao.net.br/informacoes/172/",
       "linkTxt": "Página do concurso no Instituto ACCESS",
-      "nota": "A data final de inscrição (07/01/2027) é provável; confirme no edital. Cada cargo exige uma graduação específica. Há vagas para pessoas com deficiência, pessoas negras e candidatos hipossuficientes."
+      "nota": "A data final de inscrição (07/01/2027) é provável; confirme no edital. Cada cargo exige uma graduação específica. Há vagas para pessoas com deficiência, pessoas negras e candidatos hipossuficientes.",
+      "conferido": "2026-11-17",
+      "edital": "https://access.selecao.net.br/informacoes/172/"
     },
     {
       "id": "tcdf",
@@ -205,7 +221,8 @@
       "salN": 14990.41,
       "taxa": "R$ 148,00",
       "link": "https://blog.grancursosonline.com.br/concursos-df",
-      "linkTxt": "Resumo do concurso"
+      "linkTxt": "Resumo do concurso",
+      "conferido": "2026-11-17"
     },
     {
       "id": "cgu",
@@ -225,7 +242,8 @@
       "sal": "Até R$ 20.000",
       "salN": 20000,
       "link": "https://valorfinal.com.br/concursos/edital/controladoria-geral-da-uniao__1-2026",
-      "linkTxt": "Edital na íntegra (ValorFinal)"
+      "linkTxt": "Edital na íntegra (ValorFinal)",
+      "conferido": "2026-11-17"
     },
     {
       "id": "sedes",
@@ -248,7 +266,8 @@
       "salN": 6071.09,
       "taxa": "R$ 84,00 a R$ 113,00",
       "link": "https://blog.grancursosonline.com.br/concursos-df",
-      "linkTxt": "Resumo do concurso"
+      "linkTxt": "Resumo do concurso",
+      "conferido": "2026-11-17"
     },
     {
       "id": "p-sefaz",
@@ -270,7 +289,8 @@
       "banca": "Cebraspe",
       "previsao": "—",
       "previsaoNota": "Edital em fase interna",
-      "tipo": "previsto"
+      "tipo": "previsto",
+      "conferido": "2026-11-18"
     },
     {
       "id": "p-pcdf",
@@ -286,7 +306,8 @@
       "sal": "A definir",
       "link": "https://folha.qconcursos.com/n/concursos-df-ldo-2027",
       "linkTxt": "Matéria sobre a LDO 2027",
-      "nota": "Escolaridade ainda não divulgada."
+      "nota": "Escolaridade ainda não divulgada.",
+      "conferido": "2026-11-17"
     },
     {
       "id": "p-penal",
@@ -302,7 +323,8 @@
       "sal": "A definir",
       "link": "https://folha.qconcursos.com/n/concursos-df-ldo-2027",
       "linkTxt": "Matéria sobre a LDO 2027",
-      "nota": "Escolaridade ainda não divulgada."
+      "nota": "Escolaridade ainda não divulgada.",
+      "conferido": "2026-11-17"
     },
     {
       "id": "p-der",
@@ -322,7 +344,8 @@
       "salN": 9757.78,
       "link": "https://dol.com.br/concursos/960953/concursos-2027-confira-desde-ja-as-oportunidades-previstas",
       "linkTxt": "Lista de concursos previstos para 2027",
-      "nota": "Salários conforme o último edital. Previsto para 2027."
+      "nota": "Salários conforme o último edital. Previsto para 2027.",
+      "conferido": "2026-11-17"
     },
     {
       "id": "p-tjdft",
@@ -341,7 +364,8 @@
       "sal": "A definir",
       "link": "https://folha.qconcursos.com/n/concurso-tjdft-ploa-2027",
       "linkTxt": "Matéria sobre o PLOA 2027",
-      "nota": "Previsto no projeto de orçamento de 2027. Sem banca nem data."
+      "nota": "Previsto no projeto de orçamento de 2027. Sem banca nem data.",
+      "conferido": "2026-11-17"
     },
     {
       "id": "p-pgdf",
@@ -359,7 +383,8 @@
       "sal": "A definir",
       "link": "https://cj.estrategia.com/portal/ldo-2027-do-df-preve-recursos-para-concursos/",
       "linkTxt": "Matéria sobre a LDO 2027",
-      "nota": "A LDO 2027 prevê recursos para os concursos. Exige graduação em Direito."
+      "nota": "A LDO 2027 prevê recursos para os concursos. Exige graduação em Direito.",
+      "conferido": "2026-11-17"
     },
     {
       "id": "ms-saude",
@@ -385,7 +410,9 @@
       "taxa": "R$ 60,00",
       "link": "https://concursosnobrasil.com/concursos/2026/11/12/ministerio-da-saude-abre-processo-seletivo-com-300-vagas-e-salarios-de-ate-r-103-mil/",
       "linkTxt": "Matéria com detalhes do edital",
-      "nota": "Vagas em 7 cidades (Brasília, Goiânia, Belo Horizonte, São Paulo, Curitiba, Recife e Belém); você escolhe a cidade na inscrição e não pode trocar depois. Cada perfil exige formação específica. Há isenção de taxa nos casos previstos no edital."
+      "nota": "Vagas em 7 cidades (Brasília, Goiânia, Belo Horizonte, São Paulo, Curitiba, Recife e Belém); você escolhe a cidade na inscrição e não pode trocar depois. Cada perfil exige formação específica. Há isenção de taxa nos casos previstos no edital.",
+      "conferido": "2026-11-18",
+      "edital": "https://avalia.org.br/concursos/644"
     },
     {
       "id": "sarah",
@@ -410,7 +437,8 @@
       "taxa": "R$ 120,00",
       "link": "https://concursosnobrasil.com/concursos/2026/11/13/rede-sarah-lanca-dois-seletivos-com-salarios-de-ate-r-149-mil/",
       "linkTxt": "Matéria com detalhes dos editais",
-      "nota": "Escolha apenas um processo seletivo. O salário vale após o treinamento, que dura até seis meses com bolsa de R$ 7.843,38 (TI) ou R$ 7.701,08 (Estatístico). Estatístico exige registro no CONRE."
+      "nota": "Escolha apenas um processo seletivo. O salário vale após o treinamento, que dura até seis meses com bolsa de R$ 7.843,38 (TI) ou R$ 7.701,08 (Estatístico). Estatístico exige registro no CONRE.",
+      "conferido": "2026-11-18"
     },
     {
       "id": "iges119",
@@ -432,7 +460,9 @@
       "sal": "R$ 13.359,56",
       "salN": 13359.56,
       "link": "https://processoseletivo.igesdf.org.br/vagas",
-      "linkTxt": "Portal do IGESDF"
+      "linkTxt": "Portal do IGESDF",
+      "conferido": "2026-11-18",
+      "edital": "https://processoseletivo.igesdf.org.br/vagas"
     },
     {
       "id": "iges118",
@@ -454,7 +484,9 @@
       "sal": "R$ 5.259,97",
       "salN": 5259.97,
       "link": "https://processoseletivo.igesdf.org.br/vagas",
-      "linkTxt": "Portal do IGESDF"
+      "linkTxt": "Portal do IGESDF",
+      "conferido": "2026-11-18",
+      "edital": "https://processoseletivo.igesdf.org.br/vagas"
     },
     {
       "tipo": "previsto",
@@ -476,7 +508,8 @@
       "previsaoNota": "Edital até dezembro",
       "link": "https://folha.qconcursos.com/n/concurso-sedf-edital-dezembro-2026",
       "linkTxt": "Matéria de 11/11 sobre o edital",
-      "nota": "Banca contratada e página já criada no site da Quadrix, sem inscrições. A Secretaria diz que novas informações saem entre o fim de novembro e o início de dezembro. Professor concentra 7.517 vagas."
+      "nota": "Banca contratada e página já criada no site da Quadrix, sem inscrições. A Secretaria diz que novas informações saem entre o fim de novembro e o início de dezembro. Professor concentra 7.517 vagas.",
+      "conferido": "2026-11-18"
     },
     {
       "tipo": "previsto",
@@ -496,7 +529,8 @@
       "previsaoNota": "Sem data de edital",
       "link": "https://folha.qconcursos.com/n/concursos-distrito-federal",
       "linkTxt": "Resumo dos concursos do DF",
-      "nota": "Banca contratada. Cargos e escolaridade ainda não divulgados."
+      "nota": "Banca contratada. Cargos e escolaridade ainda não divulgados.",
+      "conferido": "2026-11-18"
     },
     {
       "tipo": "previsto",
@@ -514,7 +548,8 @@
       "previsaoNota": "Banca a definir",
       "link": "https://folha.qconcursos.com/n/concursos-distrito-federal",
       "linkTxt": "Resumo dos concursos do DF",
-      "nota": "Autorizado, sem banca nem data."
+      "nota": "Autorizado, sem banca nem data.",
+      "conferido": "2026-11-18"
     },
     {
       "tipo": "previsto",
@@ -533,7 +568,8 @@
       "previsaoNota": "Sem data de edital",
       "link": "https://folha.qconcursos.com/n/concursos-distrito-federal",
       "linkTxt": "Resumo dos concursos do DF",
-      "nota": "As fontes divergem sobre a banca (Cebraspe ou ainda em escolha)."
+      "nota": "As fontes divergem sobre a banca (Cebraspe ou ainda em escolha).",
+      "conferido": "2026-11-18"
     },
     {
       "tipo": "previsto",
@@ -553,7 +589,8 @@
       "salN": 5775.26,
       "link": "https://folha.qconcursos.com/n/concursos-distrito-federal",
       "linkTxt": "Resumo dos concursos do DF",
-      "nota": "Previsto para 2027, sem edital."
+      "nota": "Previsto para 2027, sem edital.",
+      "conferido": "2026-11-18"
     }
   ]
 }

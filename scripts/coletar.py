@@ -30,7 +30,11 @@ SAIDA = RAIZ / "docs" / "dados.json"
 LISTAGENS = [
     "https://concursosnobrasil.com/concursos/df/",
     "https://concursosnobrasil.com/concursos/df/feed/",
+    # Matérias nacionais (ministérios, agências): só entram se citarem Brasília ou o DF.
+    "https://concursosnobrasil.com/concursos/",
 ]
+SITE_URL = "https://jp-te.github.io/Radar-Concursos-DF/"
+RE_MENCAO_DF = re.compile(r"bras[ií]lia|distrito federal|\(DF\)|\bDF\b", re.I)
 UA = "RadarConcursosDF/1.0 (projeto pessoal de acompanhamento de concursos)"
 MAX_ARTIGOS = 20      # limite de matérias novas por execução
 JANELA_DIAS = 120     # ignora matérias mais antigas que isso
@@ -273,7 +277,7 @@ def montar_item(url, titulo, texto, publicado):
         "titulo": titulo,
         "org": org_do_titulo(titulo),
         "cargo": cargo_do_titulo(titulo),
-        "esfera": "Distrito Federal",
+        "esfera": "Distrito Federal" if eh_regional(url) else "Nacional, com vagas em Brasília",
         "nivel": achar_nivel(texto),
         "area": achar_areas(titulo, texto),
         "banca": achar_banca(texto),
@@ -296,7 +300,7 @@ def montar_item(url, titulo, texto, publicado):
 
 def links_de_materias(texto):
     vistos, saida = set(), []
-    for m in re.finditer(r"https://concursosnobrasil\.com/concursos/df/\d{4}/\d{2}/\d{2}/[a-z0-9\-]+/?", texto):
+    for m in re.finditer(r"https://concursosnobrasil\.com/concursos/(?:df/)?\d{4}/\d{2}/\d{2}/[a-z0-9\-]+/?", texto):
         u = m.group(0)
         if not u.endswith("/"):
             u += "/"
@@ -306,26 +310,33 @@ def links_de_materias(texto):
     return saida
 
 
+def eh_regional(url):
+    return "/concursos/df/" in url
+
+
 def coletar(cache, ocultar, hoje):
-    candidatos, falhas = [], 0
+    """Atualiza o cache. Devolve {"fontes": [{url, ok}], "novos": [urls]}."""
+    candidatos, fontes = [], []
     for pagina in LISTAGENS:
         try:
             candidatos += links_de_materias(baixar(pagina))
+            fontes.append({"url": pagina, "ok": True})
         except Exception as e:  # rede, bloqueio, página mudou
-            falhas += 1
+            fontes.append({"url": pagina, "ok": False})
             print(f"::warning::Não consegui abrir {pagina}: {e}")
         time.sleep(1)
-    if falhas == len(LISTAGENS):
+    if not any(f["ok"] for f in fontes):
         print("::warning::Nenhuma listagem respondeu; mantendo os dados já coletados.")
-        return
-    novos = []
+        return {"fontes": fontes, "novos": []}
+    pendentes = []
     for u in dict.fromkeys(candidatos):
         d = data_da_url(u)
         if u in cache or u in ocultar or not d or (hoje - d).days > JANELA_DIAS:
             continue
-        novos.append((d, u))
-    novos.sort(reverse=True)
-    for d, u in novos[:MAX_ARTIGOS]:
+        pendentes.append((d, u))
+    pendentes.sort(reverse=True)
+    novos = []
+    for d, u in pendentes[:MAX_ARTIGOS]:
         try:
             titulo, texto = para_texto(baixar(u))
         except Exception as e:
@@ -335,8 +346,13 @@ def coletar(cache, ocultar, hoje):
         if not titulo or not TITULO_VALIDO.search(titulo) or TITULO_IGNORAR.search(titulo):
             cache[u] = {"ignorado": True, "publicado": d.isoformat()}  # não olhar de novo
             continue
+        if not eh_regional(u) and not RE_MENCAO_DF.search(titulo + " " + texto):
+            cache[u] = {"ignorado": True, "publicado": d.isoformat()}  # nacional sem vagas no DF
+            continue
         cache[u] = montar_item(u, titulo, texto, d)
+        novos.append(u)
         print("novo:", cache[u]["org"], "|", cache[u].get("fim", "sem prazo"))
+    return {"fontes": fontes, "novos": novos}
 
 
 def vencido(item, hoje):
@@ -372,7 +388,81 @@ def carregar_json(caminho, padrao):
         return padrao
 
 
+# ---------------------------------------------------------------- avisos
+
+def _h(txt):
+    return html.escape(str(txt), quote=False)
+
+
+def texto_aviso(item, motivo):
+    """Mensagem em HTML do Telegram para um concurso."""
+    linhas = [f"<b>{_h(motivo)}</b>", f"{_h(item.get('org', ''))}"]
+    if item.get("cargo"):
+        linhas.append(_h(item["cargo"]))
+    if item.get("ini") and item.get("fim"):
+        linhas.append(f"Inscrições: {_br(item['ini'])} a {_br(item['fim'])}")
+    elif item.get("fim"):
+        linhas.append(f"Inscrições até {_br(item['fim'])}")
+    if item.get("vagas"):
+        linhas.append(f"Vagas: {_h(item['vagas'])}")
+    if item.get("sal") and item["sal"] != "A definir":
+        linhas.append(f"Salário: {_h(item['sal'])}")
+    linhas.append(f"{SITE_URL}#concurso={item['id']}")
+    return "\n".join(linhas)
+
+
+def _br(iso):
+    a, m, d = iso.split("-")
+    return f"{d}/{m}/{a}"
+
+
+def enviar_telegram(token, chat, texto):
+    corpo = json.dumps({"chat_id": chat, "text": texto, "parse_mode": "HTML",
+                        "disable_web_page_preview": False}).encode()
+    req = urllib.request.Request(f"https://api.telegram.org/bot{token}/sendMessage", data=corpo,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=20) as r:
+        return r.status == 200
+
+
+def avisos_do_dia(anteriores, atuais, hoje, enviar_lembretes):
+    """Lista (motivo, item): concursos novos e, no agendamento diário, prazos que acabam logo."""
+    saida = []
+    if anteriores is not None:
+        for i in atuais:
+            if i["id"] not in anteriores:
+                motivo = "Previsto" if i.get("tipo") == "previsto" else "Novo concurso no radar"
+                saida.append((motivo, i))
+    if enviar_lembretes:
+        for i in atuais:
+            if i.get("tipo") == "previsto" or not i.get("fim"):
+                continue
+            falta = (datetime.strptime(i["fim"], "%Y-%m-%d").date() - hoje).days
+            if falta in (3, 1):
+                saida.append((f"Inscrições terminam em {falta} {'dia' if falta == 1 else 'dias'}", i))
+            elif falta == 0:
+                saida.append(("Último dia de inscrição hoje", i))
+    return saida[:12]
+
+
+def notificar(avisos):
+    import os
+    token, chat = os.environ.get("TELEGRAM_BOT_TOKEN"), os.environ.get("TELEGRAM_CHAT_ID")
+    if not avisos:
+        return
+    if not token or not chat:
+        print(f"{len(avisos)} aviso(s) pendente(s), mas o Telegram não está configurado.")
+        return
+    for motivo, item in avisos:
+        try:
+            enviar_telegram(token, chat, texto_aviso(item, motivo))
+            time.sleep(1)
+        except Exception as e:
+            print(f"::warning::Não consegui enviar o aviso de {item.get('org')}: {e}")
+
+
 def main():
+    import os
     ap = argparse.ArgumentParser()
     ap.add_argument("--offline", action="store_true", help="não acessa a internet")
     args = ap.parse_args()
@@ -380,22 +470,35 @@ def main():
     hoje = datetime.now(timezone(timedelta(hours=-3))).date()
     manual = carregar_json(MANUAL, {"concursos": [], "ocultar_urls": []})
     cache = carregar_json(CACHE, {})
+    anterior = carregar_json(SAIDA, None)
+    ids_anteriores = {c["id"] for c in anterior["concursos"]} if anterior else None
+    coleta = (anterior or {}).get("coleta")
 
     if not args.offline:
-        coletar(cache, set(manual.get("ocultar_urls", [])), hoje)
+        resultado = coletar(cache, set(manual.get("ocultar_urls", [])), hoje)
+        coleta = {"quando": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                  "fontes": resultado["fontes"], "novos": len(resultado["novos"])}
 
     cache = {u: reprocessar(i) for u, i in cache.items() if not vencido(i, hoje)}
     cache = {u: i for u, i in cache.items() if not i.get("descartar")}
     auto = [i for i in cache.values() if not i.get("ignorado")]
+    todos = manual.get("concursos", []) + auto
 
     saida = {
         "atualizado": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "concursos": manual.get("concursos", []) + auto,
+        "coleta": coleta,
+        "concursos": todos,
     }
+    if manual.get("telegram"):
+        saida["telegram"] = manual["telegram"]  # link do canal, mostrado como botão no site
     SAIDA.parent.mkdir(parents=True, exist_ok=True)
     SAIDA.write_text(json.dumps(saida, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     print(f"dados.json: {len(manual.get('concursos', []))} manuais + {len(auto)} automáticos")
+
+    if not args.offline:
+        agendado = os.environ.get("GITHUB_EVENT_NAME") == "schedule"
+        notificar(avisos_do_dia(ids_anteriores, todos, hoje, agendado))
 
 
 if __name__ == "__main__":

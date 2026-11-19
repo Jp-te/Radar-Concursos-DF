@@ -97,6 +97,58 @@ class Ajustes(unittest.TestCase):
         self.assertTrue(c.reprocessar(estagio).get("descartar"))
 
 
+class Fontes(unittest.TestCase):
+    def test_links_nacionais_e_regionais(self):
+        pagina = ('<a href="https://concursosnobrasil.com/concursos/2026/11/12/ministerio-da-saude-abre/">a</a>'
+                  '<a href="https://concursosnobrasil.com/concursos/df/2026/11/10/igesdf-divulga/">b</a>')
+        links = c.links_de_materias(pagina)
+        self.assertEqual(len(links), 2)
+        self.assertTrue(c.eh_regional(links[1]))
+        self.assertFalse(c.eh_regional(links[0]))
+
+    def test_mencao_ao_df(self):
+        self.assertTrue(c.RE_MENCAO_DF.search("Os candidatos atuarão em Brasília (DF) ou Goiânia"))
+        self.assertTrue(c.RE_MENCAO_DF.search("vagas no Distrito Federal"))
+        self.assertFalse(c.RE_MENCAO_DF.search("Prefeitura de Pilar do Sul abre vagas em São Paulo"))
+
+    def test_esfera_nacional(self):
+        url = "https://concursosnobrasil.com/concursos/2026/11/12/ministerio-da-saude-abre/"
+        item = c.montar_item(url, "Ministério da Saúde abre processo seletivo com 759 vagas", "Vagas em Brasília.", date(2026, 11, 12))
+        self.assertIn("Nacional", item["esfera"])
+
+
+class Avisos(unittest.TestCase):
+    HOJE = date(2026, 11, 18)
+    A = {"id": "a", "org": "Órgão A", "cargo": "Cargo & Cia", "ini": "2026-11-10", "fim": "2026-11-21", "vagas": "10", "sal": "R$ 5.000,00"}
+    B = {"id": "b", "org": "Órgão B", "fim": "2026-11-19"}
+    P = {"id": "p", "org": "Previsto", "tipo": "previsto"}
+
+    def test_sem_historico_nao_avisa(self):
+        self.assertEqual(c.avisos_do_dia(None, [self.A], self.HOJE, False), [])
+
+    def test_novo_concurso(self):
+        av = c.avisos_do_dia({"b"}, [self.A, self.B], self.HOJE, False)
+        self.assertEqual([i["id"] for _, i in av], ["a"])
+        self.assertEqual(av[0][0], "Novo concurso no radar")
+
+    def test_novo_previsto(self):
+        av = c.avisos_do_dia(set(), [self.P], self.HOJE, False)
+        self.assertEqual(av[0][0], "Previsto")
+
+    def test_lembretes_so_no_agendamento(self):
+        base = {"a", "b", "p"}
+        self.assertEqual(c.avisos_do_dia(base, [self.A, self.B], self.HOJE, False), [])
+        av = c.avisos_do_dia(base, [self.A, self.B, self.P], self.HOJE, True)
+        self.assertEqual([(m, i["id"]) for m, i in av],
+                         [("Inscrições terminam em 3 dias", "a"), ("Inscrições terminam em 1 dia", "b")])
+
+    def test_texto_escapa_html_e_tem_link(self):
+        t = c.texto_aviso(self.A, "Novo concurso no radar")
+        self.assertIn("Cargo &amp; Cia", t)
+        self.assertIn("Inscrições: 10/11/2026 a 21/11/2026", t)
+        self.assertTrue(t.endswith("#concurso=a"))
+
+
 class Materia(unittest.TestCase):
     def setUp(self):
         titulo, texto = c.para_texto(DPDF_HTML)

@@ -1,5 +1,19 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Radar Concursos DF</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Concursos abertos, que começam em breve e previstos no Distrito Federal, com filtro por escolaridade, área e salário, calendário de prazos e avisos.">
+<meta name="theme-color" content="#0f8b8d">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Radar Concursos DF">
+<meta property="og:description" content="Concursos abertos, que começam em breve e previstos no Distrito Federal, com filtro por escolaridade, área e salário, calendário de prazos e avisos.">
+<meta property="og:url" content="https://jp-te.github.io/Radar-Concursos-DF/">
+<meta property="og:image" content="https://jp-te.github.io/Radar-Concursos-DF/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f8b8d'/%3E%3Ccircle cx='32' cy='32' r='15' fill='none' stroke='white' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='4' fill='white'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
@@ -67,7 +81,7 @@ button, input, select { font: inherit; color: inherit; }
 .top { display: grid; gap: 16px; margin-bottom: 26px; }
 .eyebrow {
   justify-self: start; font-size: 13px; font-weight: 500; color: var(--accent);
-  background: var(--accent-soft); padding: 6px 14px; border-radius: 999px; text-transform: capitalize;
+  background: var(--accent-soft); padding: 6px 14px; border-radius: 999px;
 }
 h1 {
   font: 800 clamp(34px, 7vw, 54px)/1.05 var(--f-display);
@@ -167,64 +181,225 @@ select {
   .chip, .save { transition: background-color .15s, color .15s; }
   .card { transition: box-shadow .2s; }
 }
-</style>
 
+/* ---- Base para página independente ---- */
+:root { color-scheme: light; }
+[hidden] { display: none !important; }
+body { margin: 0; }
+img { max-width: 100%; }
+
+/* ---- Novos recursos ---- */
+.btn { border: 0; background: var(--surface); border-radius: 999px; padding: 8px 16px; cursor: pointer; font-size: 14px; font-weight: 500; box-shadow: 0 1px 2px rgba(22,37,43,.06); text-decoration: none; color: var(--fg); display: inline-flex; align-items: center; gap: 6px; }
+.btn:hover { background: var(--accent-soft); }
+.cal .btn, .det-card .btn { background: var(--bg); }
+.cal .btn:hover, .det-card .btn:hover { background: var(--accent-soft); }
+.btn.pri, .det-card .btn.pri { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.btn.pri:hover, .det-card .btn.pri:hover { background: var(--accent); filter: brightness(1.06); }
+.btn[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+.acoes { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.seg { display: inline-flex; background: var(--surface); border-radius: 999px; padding: 3px; box-shadow: 0 1px 2px rgba(22,37,43,.06); }
+.seg button { border: 0; background: transparent; padding: 7px 16px; border-radius: 999px; cursor: pointer; font-size: 14px; font-weight: 500; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.linha-topo { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+
+.aviso-coleta { background: var(--warn-bg); color: var(--warn); border-radius: 14px; padding: 12px 16px; font-size: 14px; margin-bottom: 16px; font-weight: 500; }
+
+.semana { background: var(--surface); border-radius: 22px; box-shadow: var(--shadow); padding: 16px 18px; margin-bottom: 18px; display: grid; gap: 10px; }
+.semana h2 { margin: 0; font: 700 16px/1.2 var(--f-display); letter-spacing: -.01em; }
+.semana ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.semana a { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 10px; align-items: baseline; text-decoration: none; color: var(--fg); padding: 6px 8px; border-radius: 10px; }
+.semana a:hover { background: var(--accent-soft); }
+.semana .q { font-size: 12.5px; font-weight: 700; padding: 3px 8px; border-radius: 999px; text-align: center; background: var(--warn-bg); color: var(--warn); }
+.semana .q.hoje { background: var(--bad-bg); color: var(--bad); }
+.semana .t { overflow-wrap: anywhere; font-weight: 500; }
+.semana .t small { color: var(--muted); font-weight: 400; }
+
+.sel { font-size: 12.5px; color: var(--muted); margin-left: auto; }
+.foot a.det { font-weight: 700; }
+.foot .wa { font-weight: 600; color: var(--ok); }
+
+/* Calendário */
+.cal { background: var(--surface); border-radius: 22px; box-shadow: var(--shadow); padding: 16px; display: grid; gap: 14px; }
+.cal-topo { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.cal-topo h2 { margin: 0; font: 700 20px/1.2 var(--f-display); letter-spacing: -.01em; }
+.cal-topo h2::first-letter { text-transform: uppercase; }
+.cal-nav { display: flex; gap: 6px; }
+.cal-grade { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.cal-sem { font-size: 12px; font-weight: 600; color: var(--muted); text-align: center; padding: 2px 0 4px; }
+.dia { border: 0; background: var(--bg); border-radius: 12px; min-height: 58px; padding: 6px 4px 6px 6px; cursor: pointer; text-align: left; display: grid; align-content: space-between; gap: 4px; min-width: 0; }
+.dia:hover { background: var(--accent-soft); }
+.dia.fora { background: transparent; cursor: default; }
+.dia.hoje { outline: 2px solid var(--accent); outline-offset: -2px; }
+.dia[aria-pressed="true"] { background: var(--accent-soft); outline: 2px solid var(--accent); outline-offset: -2px; }
+.dia b { font-size: 13px; font-weight: 600; }
+.pontos { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; }
+.pt { width: 8px; height: 8px; border-radius: 50%; }
+.pt.abre { background: var(--accent); }
+.pt.fecha { background: var(--bad); }
+.pt.prova { background: var(--ok); }
+.pontos small { font-size: 11px; color: var(--muted); }
+.legenda { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--muted); }
+.legenda span { display: inline-flex; align-items: center; gap: 6px; }
+.agenda { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.agenda a { display: grid; grid-template-columns: 64px 108px minmax(0, 1fr); gap: 10px; align-items: baseline; text-decoration: none; color: var(--fg); padding: 8px 10px; border-radius: 12px; }
+.agenda a:hover { background: var(--accent-soft); }
+.agenda .dd { font-weight: 700; font-variant-numeric: tabular-nums; }
+.agenda .tp { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.agenda .tx { overflow-wrap: anywhere; font-weight: 500; }
+@media (max-width: 560px) {
+  .agenda a { grid-template-columns: 56px minmax(0, 1fr); }
+  .agenda .tp { grid-column: 2; grid-row: 2; }
+  .agenda .tx { grid-column: 2; }
+  .dia { min-height: 50px; }
+}
+
+/* Página de um concurso */
+.voltar { margin-bottom: 14px; }
+.det-card { background: var(--surface); border-radius: 22px; box-shadow: var(--shadow); padding: 22px; display: grid; gap: 20px; }
+.det-card h2 { margin: 0; font: 800 clamp(24px, 4.5vw, 32px)/1.15 var(--f-display); letter-spacing: -.02em; text-wrap: balance; }
+.det-card h3 { margin: 0 0 10px; font: 700 15px/1.2 var(--f-display); }
+.status-faixa { display: inline-flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; padding: 10px 16px; border-radius: 14px; background: var(--idle-bg); color: var(--idle); font-weight: 700; justify-self: start; }
+.status-faixa.s-abertas { background: var(--ok-bg); color: var(--ok); }
+.status-faixa.s-hoje { background: var(--bad-bg); color: var(--bad); }
+.status-faixa.s-semana { background: var(--warn-bg); color: var(--warn); }
+.status-faixa.s-breve { background: var(--accent-soft); color: var(--accent); }
+.linha { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.linha li { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; padding-bottom: 14px; position: relative; }
+.linha li:not(:last-child)::before { content: ""; position: absolute; left: 9px; top: 20px; bottom: 0; width: 2px; background: var(--line); }
+.linha .bola { width: 20px; height: 20px; border-radius: 50%; background: var(--idle-bg); border: 3px solid var(--surface); box-shadow: 0 0 0 2px var(--line); margin-top: 1px; }
+.linha .passou .bola { background: var(--ok); box-shadow: 0 0 0 2px var(--ok); }
+.linha .agora .bola { background: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+.linha b { display: block; font-weight: 600; }
+.linha small { color: var(--muted); }
+.check { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--muted); font-size: 14.5px; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.top.compacto .lede, .top.compacto .stats, .top.compacto .acoes { display: none; }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-size: 14px; font-weight: 500; z-index: 20; opacity: 0; pointer-events: none; }
+.toast.on { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) { .toast { transition: opacity .2s; } }
+.fontes { font-size: 12.5px; }
+.select-sal { max-width: 100%; }
+</style>
+</head>
+<body>
 <div class="wrap">
   <header class="top">
     <div class="eyebrow" id="hoje"></div>
     <h1>Radar <span>Concursos DF</span></h1>
-    <p class="lede">Editais abertos, que começam em breve e previstos para quem mora no Distrito Federal. Escolha sua escolaridade e veja o que você pode fazer.</p>
+    <p class="lede">Editais abertos, que começam em breve e previstos para quem mora no Distrito Federal. Escolha sua escolaridade e sua área para ver o que você pode fazer.</p>
     <div class="stats" id="stats"></div>
+    <div class="acoes" id="topo-acoes"></div>
   </header>
 
-  <section class="bar" aria-label="Filtros">
-    <label class="search"><span hidden>Buscar</span>
-      <input id="q" type="search" placeholder="Buscar órgão, cargo ou banca (ex.: IGESDF, enfermeiro, Cebraspe)" autocomplete="off">
-    </label>
-    <div class="groups">
-      <div class="group" role="group" aria-labelledby="l-sit">
-        <span class="lab" id="l-sit">Situação</span>
-        <div class="chips" id="f-sit"></div>
-      </div>
-      <div class="group" role="group" aria-labelledby="l-niv">
-        <span class="lab" id="l-niv">Minha escolaridade</span>
-        <div class="chips" id="f-niv"></div>
-      </div>
-      <div class="group">
-        <label for="f-area">Área</label>
-        <select id="f-area"></select>
-      </div>
-      <div class="group">
-        <label for="f-ord">Ordenar</label>
-        <select id="f-ord">
-          <option value="prazo">Prazo mais próximo</option>
-          <option value="salario">Maior salário</option>
-        </select>
-      </div>
-    </div>
-    <div class="count" id="count" aria-live="polite"></div>
-  </section>
+  <div id="aviso-coleta" class="aviso-coleta" hidden></div>
 
-  <main>
-    <ul class="list" id="list"></ul>
-  </main>
+  <div id="vista-lista">
+    <section class="bar" aria-label="Filtros">
+      <label class="search"><span hidden>Buscar</span>
+        <input id="q" type="search" placeholder="Buscar órgão, cargo ou banca (ex.: IGESDF, enfermeiro, Cebraspe)" autocomplete="off">
+      </label>
+      <div class="groups">
+        <div class="group" role="group" aria-labelledby="l-sit">
+          <span class="lab" id="l-sit">Situação</span>
+          <div class="chips" id="f-sit"></div>
+        </div>
+        <div class="group" role="group" aria-labelledby="l-niv">
+          <span class="lab" id="l-niv">Minha escolaridade</span>
+          <div class="chips" id="f-niv"></div>
+        </div>
+        <div class="group">
+          <label for="f-area">Minha área ou formação</label>
+          <select id="f-area"></select>
+        </div>
+        <div class="group">
+          <label for="f-sal">Salário</label>
+          <select id="f-sal" class="select-sal">
+            <option value="0">Qualquer salário</option>
+            <option value="3000">A partir de R$ 3 mil</option>
+            <option value="5000">A partir de R$ 5 mil</option>
+            <option value="8000">A partir de R$ 8 mil</option>
+            <option value="12000">A partir de R$ 12 mil</option>
+          </select>
+        </div>
+        <div class="group">
+          <label for="f-ord">Ordenar</label>
+          <select id="f-ord">
+            <option value="prazo">Prazo mais próximo</option>
+            <option value="salario">Maior salário</option>
+          </select>
+        </div>
+      </div>
+      <div class="linha-topo">
+        <div class="count" id="count" aria-live="polite"></div>
+        <div class="seg" role="group" aria-label="Modo de exibição">
+          <button type="button" id="v-lista" data-v="lista" aria-pressed="true">Lista</button>
+          <button type="button" id="v-cal" data-v="calendario" aria-pressed="false">Calendário</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="semana" class="semana" hidden aria-labelledby="t-semana"></section>
+
+    <main>
+      <ul class="list" id="list"></ul>
+      <section class="cal" id="cal" hidden aria-label="Calendário de prazos"></section>
+    </main>
+  </div>
+
+  <article id="detalhe" hidden></article>
 
   <footer class="aviso">
-    <p><b id="atualizado">Atualizado todos os dias.</b> Os dados vêm de portais de notícias de concursos e de uma lista curada à mão. Os prazos mudam com retificações de edital: confirme sempre no edital oficial antes de pagar a taxa.</p>
-    <p>Quem tem nível superior também pode disputar vagas de nível médio e técnico, mas cada cargo pode exigir curso, registro em conselho ou experiência específica. Itens "previstos" vêm da LDO 2027 do DF e ainda não têm edital nem data.</p>
+    <p><b id="atualizado">Atualizado todos os dias.</b> <span id="coleta-info" class="fontes"></span></p>
+    <p>Os dados vêm de portais de notícias de concursos e de uma lista conferida à mão. Os prazos mudam com retificações de edital: confirme sempre no edital oficial antes de pagar a taxa.</p>
+    <p>Quem tem nível superior também pode disputar vagas de nível médio e técnico, mas cada cargo pode exigir curso, registro em conselho ou experiência específica. Itens "previstos" ainda não têm edital nem data confirmada.</p>
   </footer>
 </div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-function iniciar(DATA, atualizado) {
+var SITE = "https://jp-te.github.io/Radar-Concursos-DF/";
+
+function iniciar(DATA, meta) {
+  "use strict";
   var NIVEL = { medio: 1, tecnico: 2, superior: 3 };
   var NIVEL_LABEL = { medio: "Ensino médio", tecnico: "Técnico", superior: "Superior" };
+  var MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+  var SEMANA = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+  // Palavras que indicam a formação exigida, além da área cadastrada.
+  var PALAVRAS = {
+    "Saúde": /sa[uú]de|m[eé]dic|enferm|farm[aá]c|odont|fisioter|terapeut|nutri|psic[oó]l|hospital/i,
+    "Jurídica": /direito|jur[ií]dic|procurador|defensor|magistrad/i,
+    "TI": /\bTI\b|inform[aá]tica|tecnologia da informa|sistemas|desenvolvimento|banco de dados|redes/i,
+    "Contabilidade": /cont[aá]b/i,
+    "Educação": /professor|pedagog|educa/i,
+    "Engenharia e transporte": /engenh|edifica|equipamentos|rodovi|metr[oô]/i,
+    "Administração": /administra|gestor|gest[aã]o/i,
+    "Controle e fiscal": /auditor|fiscal|controle|tribut/i
+  };
 
   var HOJE = new Date(); HOJE.setHours(0, 0, 0, 0);
   function pd(s) { if (!s) return null; var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function iso(d) { return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
   function br(s) { var p = s.split("-"); return p[2] + "/" + p[1] + "/" + p[0]; }
   function dias(a, b) { return Math.round((a - b) / 86400000); }
   function plural(n, a, b) { return n === 1 ? a : b; }
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function relativo(d) {
+    var n = dias(d, HOJE);
+    if (n === 0) return "hoje";
+    if (n === 1) return "amanhã";
+    if (n === -1) return "ontem";
+    return n > 0 ? "em " + n + " dias" : "há " + (-n) + " dias";
+  }
+
+  function provaIso(c) {
+    if (c.provaData) return c.provaData;
+    var m = /(\d{2})\/(\d{2})\/(\d{4})/.exec(c.prova || "");
+    return m ? m[3] + "-" + m[2] + "-" + m[1] : null;
+  }
 
   function situacao(c) {
     if (c.tipo === "previsto") return { k: "previsto", cls: "s-previsto", sort: 5000, kick: "Previsão", big: c.previsao || "2027", note: c.previsaoNota || "Sem edital ainda" };
@@ -240,36 +415,43 @@ function iniciar(DATA, atualizado) {
       var note = d === 0 ? "Último dia hoje" : d === 1 ? "Falta 1 dia" : "Faltam " + d + " dias";
       return { k: "abertas", cls: cls, sort: d, dias: d, kick: "Inscrições até", big: br(c.fim).slice(0, 5), note: note };
     }
-    var pv = c.provaData ? pd(c.provaData) : null;
+    var pv = provaIso(c) ? pd(provaIso(c)) : null;
     var note2 = "Inscrições encerradas";
     if (pv && pv >= HOJE) { var m = dias(pv, HOJE); note2 = m === 0 ? "Prova hoje" : "Prova em " + m + " " + plural(m, "dia", "dias"); }
     return { k: "encerrada", cls: "s-encerrada", sort: 4000 - dias(fim, HOJE), kick: "Encerrou em", big: br(c.fim).slice(0, 5), note: note2 };
   }
-  DATA.forEach(function (c) { c.s = situacao(c); });
+  DATA.forEach(function (c) { c.nivel = c.nivel || []; c.area = c.area || []; c.s = situacao(c); });
   DATA = DATA.filter(function (c) {
     if (c.s.k !== "encerrada") return true;
-    if (c.provaData && pd(c.provaData) >= HOJE) return true;
+    var pv = provaIso(c);
+    if (pv && pd(pv) >= HOJE) return true;
     return dias(HOJE, pd(c.fim)) <= 60;
   });
+  var POR_ID = {}; DATA.forEach(function (c) { POR_ID[c.id] = c; });
 
   var SIT = [["todos", "Todos"], ["abertas", "Abertos"], ["breve", "Em breve"], ["previsto", "Previstos"], ["encerrada", "Encerrados"], ["salvos", "Salvos"]];
   var NIV = [["todas", "Todas"], ["medio", "Médio"], ["tecnico", "Técnico"], ["superior", "Superior"]];
-  var st = { sit: "todos", niv: "todas", area: "todas", ord: "prazo", q: "" };
+  var st = { sit: "todos", niv: "todas", area: "todas", sal: 0, ord: "prazo", q: "", vista: "lista", mes: { y: HOJE.getFullYear(), m: HOJE.getMonth() }, dia: null };
 
   var salvos = [];
   try { salvos = JSON.parse(localStorage.getItem("radar-df-salvos") || "[]"); } catch (e) { salvos = []; }
   function persist() { try { localStorage.setItem("radar-df-salvos", JSON.stringify(salvos)); } catch (e) {} }
 
-  var $ = function (id) { return document.getElementById(id); };
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
-
-  if (atualizado) {
-    var dt = new Date(atualizado);
+  // ---------------- cabeçalho, resumo e rodapé
+  if (meta.atualizado) {
+    var dt = new Date(meta.atualizado);
     $("atualizado").textContent = "Atualizado em " + dt.toLocaleDateString("pt-BR") + " às " + dt.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) + ".";
   }
+  if (meta.coleta && meta.coleta.fontes) {
+    var ok = meta.coleta.fontes.filter(function (f) { return f.ok; }).length, tot = meta.coleta.fontes.length;
+    var q = new Date(meta.coleta.quando);
+    $("coleta-info").textContent = "Última coleta automática: " + q.toLocaleDateString("pt-BR") + " às " + q.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) + ", " + ok + " de " + tot + " fontes responderam.";
+    if (tot && !ok) {
+      $("aviso-coleta").hidden = false;
+      $("aviso-coleta").textContent = "A última coleta automática não conseguiu abrir nenhuma fonte. Você está vendo os dados da coleta anterior.";
+    }
+  }
   $("hoje").textContent = "Hoje, " + HOJE.toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
-
-  // Resumo
   var abertas = DATA.filter(function (c) { return c.s.k === "abertas"; });
   var semana = abertas.filter(function (c) { return c.s.dias <= 7; });
   var breve = DATA.filter(function (c) { return c.s.k === "breve"; });
@@ -279,17 +461,26 @@ function iniciar(DATA, atualizado) {
     '<div class="stat"><b>' + semana.length + '</b><small>fecham em até 7 dias</small></div>' +
     '<div class="stat"><b>' + breve.length + '</b><small>começam em breve</small></div>' +
     '<div class="stat"><b>' + prev.length + '</b><small>previstos, sem edital</small></div>';
+  if (meta.telegram) {
+    $("topo-acoes").innerHTML = '<a class="btn pri" href="' + esc(meta.telegram) + '" target="_blank" rel="noopener">Receber avisos no Telegram</a>';
+  }
 
-  // Filtros
+  // ---------------- filtros
   function chips(el, opts, key) {
     el.innerHTML = opts.map(function (o) {
       return '<button type="button" class="chip" data-k="' + key + '" data-v="' + o[0] + '" aria-pressed="' + (st[key] === o[0]) + '">' + o[1] + '</button>';
     }).join("");
   }
   var areas = []; DATA.forEach(function (c) { c.area.forEach(function (a) { if (areas.indexOf(a) < 0) areas.push(a); }); });
-  areas.sort(function (a, b) { return a.localeCompare(b, "pt-BR"); });
-  $("f-area").innerHTML = '<option value="todas">Todas as áreas</option>' + areas.map(function (a) { return '<option value="' + esc(a) + '">' + esc(a) + '</option>'; }).join("");
+  Object.keys(PALAVRAS).forEach(function (a) { if (areas.indexOf(a) < 0) areas.push(a); });
+  areas = areas.filter(function (a) { return a !== "Outras"; }).sort(function (a, b) { return a.localeCompare(b, "pt-BR"); });
+  $("f-area").innerHTML = '<option value="todas">Qualquer área</option>' + areas.map(function (a) { return '<option value="' + esc(a) + '">' + esc(a) + '</option>'; }).join("");
 
+  function daArea(c, area) {
+    if (c.area.indexOf(area) >= 0) return true;
+    var rx = PALAVRAS[area];
+    return !!rx && rx.test([c.org, c.cargo, c.nota || ""].join(" "));
+  }
   function passa(c) {
     if (st.sit === "salvos") { if (salvos.indexOf(c.id) < 0) return false; }
     else if (st.sit !== "todos" && c.s.k !== st.sit) return false;
@@ -297,16 +488,76 @@ function iniciar(DATA, atualizado) {
       var menor = Math.min.apply(null, c.nivel.map(function (n) { return NIVEL[n]; }));
       if (menor > NIVEL[st.niv]) return false;
     }
-    if (st.area !== "todas" && c.area.indexOf(st.area) < 0) return false;
+    if (st.area !== "todas" && !daArea(c, st.area)) return false;
+    if (st.sal && !(c.salN >= st.sal)) return false;
     if (st.q) {
-      var hay = [c.org, c.cargo, c.banca || "", c.esfera, c.area.join(" ")].join(" ").toLowerCase();
+      var hay = [c.org, c.cargo, c.banca || "", c.esfera || "", c.area.join(" ")].join(" ").toLowerCase();
       if (hay.indexOf(st.q.toLowerCase()) < 0) return false;
     }
     return true;
   }
 
+  // ---------------- compartilhar e calendário
+  function urlDe(c) { return (location.protocol === "file:" ? SITE : location.origin + location.pathname) + "#concurso=" + c.id; }
+  function textoZap(c) {
+    var t = c.org + (c.cargo ? " · " + c.cargo : "");
+    if (c.fim && c.s.k === "abertas") t += "\nInscrições até " + br(c.fim);
+    else if (c.s.k === "breve") t += "\nInscrições a partir de " + br(c.ini);
+    else if (c.tipo === "previsto") t += "\nConcurso previsto, ainda sem edital";
+    if (c.sal && c.sal !== "A definir") t += "\nSalário: " + c.sal;
+    return t + "\n" + urlDe(c);
+  }
+  function zapHref(c) { return "https://wa.me/?text=" + encodeURIComponent(textoZap(c)); }
+  var toastT;
+  function toast(msg) {
+    var t = $("toast"); t.textContent = msg; t.classList.add("on");
+    clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove("on"); }, 2200);
+  }
+  function copiar(texto) {
+    function plano() {
+      var ta = document.createElement("textarea"); ta.value = texto; ta.setAttribute("readonly", "");
+      ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta); toast(ok ? "Link copiado" : "Copie o link da barra de endereço");
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(texto).then(function () { toast("Link copiado"); }, plano);
+    } else plano();
+  }
+  function icsTexto(s) { return String(s).replace(/\\/g, "\\\\").replace(/;/g, "\;").replace(/,/g, "\\,").replace(/\n/g, "\\n"); }
+  function compacto(s) { return s.replace(/-/g, ""); }
+  function proximoDia(s) { var d = pd(s); d.setDate(d.getDate() + 1); return compacto(iso(d)); }
+  function baixarIcs(c) {
+    var evs = [];
+    if (c.ini && pd(c.ini) >= HOJE) evs.push([c.ini, "Inscrições abrem: " + c.org, 1]);
+    if (c.fim && pd(c.fim) >= HOJE) evs.push([c.fim, "Último dia de inscrição: " + c.org, 1]);
+    var pv = provaIso(c); if (pv && pd(pv) >= HOJE) evs.push([pv, "Prova: " + c.org, 1]);
+    if (!evs.length) { toast("Não há datas futuras para adicionar"); return; }
+    var L = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Radar Concursos DF//PT", "CALSCALE:GREGORIAN"];
+    evs.forEach(function (e, i) {
+      L.push("BEGIN:VEVENT", "UID:" + c.id + "-" + i + "@radar-concursos-df", "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z",
+        "DTSTART;VALUE=DATE:" + compacto(e[0]), "DTEND;VALUE=DATE:" + proximoDia(e[0]),
+        "SUMMARY:" + icsTexto(e[1]), "DESCRIPTION:" + icsTexto((c.cargo || "") + "\nConfira no edital oficial.\n" + urlDe(c)),
+        "BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY", "DESCRIPTION:" + icsTexto(e[1]), "END:VALARM", "END:VEVENT");
+    });
+    L.push("END:VCALENDAR");
+    var blob = new Blob([L.join("\r\n")], { type: "text/calendar;charset=utf-8" });
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = c.id + ".ics";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    toast("Arquivo de calendário baixado");
+  }
+
+  // ---------------- selo de conferência
+  function selo(c) {
+    if (c.conferido) return "Conferido em " + br(c.conferido);
+    if (c.auto) return "Detectado automaticamente" + (c.publicado ? " (matéria de " + br(c.publicado) + ")" : "");
+    return "";
+  }
+
+  // ---------------- lista
   function card(c) {
-    var tags = [c.esfera].concat(c.auto ? ["Detectado automaticamente"] : []).concat(c.nivel.length ? c.nivel.map(function (n) { return NIVEL_LABEL[n]; }) : ["Escolaridade a definir"]).concat(c.area);
+    var tags = [c.esfera].filter(Boolean).concat(c.auto ? ["Detectado automaticamente"] : []).concat(c.nivel.length ? c.nivel.map(function (n) { return NIVEL_LABEL[n]; }) : ["Escolaridade a definir"]).concat(c.area);
     var info = [];
     if (c.ini && c.fim) info.push(["Inscrições", br(c.ini) + " a " + br(c.fim)]);
     else if (c.fim) info.push(["Inscrições até", br(c.fim)]);
@@ -317,27 +568,48 @@ function iniciar(DATA, atualizado) {
     if (c.banca) info.push(["Banca", c.banca]);
     var on = salvos.indexOf(c.id) >= 0;
     return '<li class="card ' + c.s.cls + '">' +
-      '<div class="when"><span class="k">' + c.s.kick + '</span><span class="d">' + c.s.big + '</span><span class="n">' + c.s.note + '</span></div>' +
+      '<div class="when"><span class="k">' + c.s.kick + '</span><span class="d">' + esc(c.s.big) + '</span><span class="n">' + esc(c.s.note) + '</span></div>' +
       '<div class="body">' +
-        '<div class="head"><div><h2 class="org">' + esc(c.org) + '</h2><p class="cargo">' + esc(c.cargo) + '</p></div>' +
+        '<div class="head"><div><h2 class="org">' + esc(c.org) + '</h2><p class="cargo">' + esc(c.cargo || "") + '</p></div>' +
         '<button type="button" class="save" data-id="' + c.id + '" aria-pressed="' + on + '">' + (on ? "Salvo" : "Salvar") + '</button></div>' +
         '<div class="tags">' + tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join("") + '</div>' +
         '<dl class="info">' + info.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join("") + '</dl>' +
         (c.nota || c.auto ? '<p class="nota">' + esc(c.nota || "Dados extraídos automaticamente da matéria. Confira prazos, vagas e requisitos no edital.") + '</p>' : '') +
-        '<div class="foot"><a href="' + c.link + '" target="_blank" rel="noopener">' + esc(c.linkTxt) + ' ↗</a></div>' +
+        '<div class="foot"><a class="det" href="#concurso=' + c.id + '">Ver detalhes</a>' +
+          (c.edital ? '<a href="' + esc(c.edital) + '" target="_blank" rel="noopener">Edital oficial ↗</a>' : '') +
+          '<a href="' + esc(c.link) + '" target="_blank" rel="noopener">' + esc(c.linkTxt || "Matéria") + ' ↗</a>' +
+          '<a class="wa" href="' + esc(zapHref(c)) + '" target="_blank" rel="noopener">WhatsApp</a>' +
+          '<span class="sel">' + esc(selo(c)) + '</span></div>' +
       '</div></li>';
   }
-
   var SEC = { abertas: "Inscrições abertas", breve: "Começam em breve", confirmar: "Prazo a confirmar", encerrada: "Encerrados, com prova ou resultado pela frente", previsto: "Previstos, sem edital" };
 
-  function render() {
+  function renderSemana() {
+    var el = $("semana");
+    var lista = abertas.filter(function (c) { return c.s.dias <= 7 && passa(c); }).sort(function (a, b) { return a.s.dias - b.s.dias; });
+    if (!lista.length || st.vista !== "lista" || st.sit === "salvos") { el.hidden = true; return; }
+    el.hidden = false;
+    el.innerHTML = '<h2 id="t-semana">Fecham nos próximos 7 dias</h2><ul>' + lista.map(function (c) {
+      var d = c.s.dias;
+      return '<li><a href="#concurso=' + c.id + '"><span class="q' + (d === 0 ? " hoje" : "") + '">' + (d === 0 ? "Hoje" : d === 1 ? "Amanhã" : "Em " + d + " dias") + '</span>' +
+        '<span class="t">' + esc(c.org) + ' <small>· ' + esc(c.cargo || "") + '</small></span></a></li>';
+    }).join("") + '</ul>';
+  }
+
+  function ordenados() {
     var items = DATA.filter(passa);
     if (st.ord === "salario") items.sort(function (a, b) { return (b.salN || 0) - (a.salN || 0); });
     else items.sort(function (a, b) { return a.s.sort - b.s.sort; });
-    $("count").textContent = items.length + " " + plural(items.length, "concurso encontrado", "concursos encontrados");
+    return items;
+  }
+
+  function renderLista() {
+    var items = ordenados();
+    $("count").textContent = items.length + " " + plural(items.length, "concurso encontrado", "concursos encontrados") +
+      (st.sal ? " (cargos sem salário informado ficam de fora)" : "");
     if (!items.length) {
       $("list").innerHTML = '<li class="empty"><b>Nada por aqui com esses filtros</b>' +
-        (st.sit === "salvos" ? "Use o botão Salvar nos concursos que quiser acompanhar." : "Tente outra escolaridade, área ou limpe a busca.") + '</li>';
+        (st.sit === "salvos" ? "Use o botão Salvar nos concursos que quiser acompanhar." : "Tente outra escolaridade, área ou salário, ou limpe a busca.") + '</li>';
       return;
     }
     var html = "", last = "";
@@ -348,30 +620,174 @@ function iniciar(DATA, atualizado) {
     $("list").innerHTML = html;
   }
 
+  // ---------------- calendário
+  var TIPO = { abre: "Inscrições abrem", fecha: "Fim das inscrições", prova: "Prova" };
+  function eventos() {
+    var ev = [];
+    DATA.filter(passa).forEach(function (c) {
+      if (c.tipo === "previsto") return;
+      if (c.ini) ev.push({ d: c.ini, k: "abre", c: c });
+      if (c.fim) ev.push({ d: c.fim, k: "fecha", c: c });
+      var pv = provaIso(c); if (pv) ev.push({ d: pv, k: "prova", c: c });
+    });
+    return ev;
+  }
+  function renderCal() {
+    var y = st.mes.y, m = st.mes.m;
+    var prefixo = y + "-" + ("0" + (m + 1)).slice(-2) + "-";
+    var ev = eventos().filter(function (e) { return e.d.indexOf(prefixo) === 0; });
+    var porDia = {}; ev.forEach(function (e) { (porDia[e.d] = porDia[e.d] || []).push(e); });
+    var primeiro = new Date(y, m, 1).getDay(), total = new Date(y, m + 1, 0).getDate();
+    var h = '<div class="cal-topo"><h2>' + MESES[m] + " de " + y + '</h2><div class="cal-nav">' +
+      '<button type="button" class="btn" data-cal="-1" aria-label="Mês anterior">‹</button>' +
+      '<button type="button" class="btn" data-cal="0">Hoje</button>' +
+      '<button type="button" class="btn" data-cal="1" aria-label="Próximo mês">›</button></div></div>' +
+      '<div class="legenda"><span><i class="pt abre"></i> Inscrições abrem</span><span><i class="pt fecha"></i> Fim das inscrições</span><span><i class="pt prova"></i> Prova</span></div>' +
+      '<div class="cal-grade">' + SEMANA.map(function (s) { return '<div class="cal-sem">' + s + '</div>'; }).join("");
+    for (var i = 0; i < primeiro; i++) h += '<div class="dia fora"></div>';
+    for (var d = 1; d <= total; d++) {
+      var k = prefixo + ("0" + d).slice(-2), es = porDia[k] || [], eh = k === iso(HOJE);
+      var pts = es.slice(0, 4).map(function (e) { return '<i class="pt ' + e.k + '"></i>'; }).join("") + (es.length > 4 ? '<small>+' + (es.length - 4) + '</small>' : "");
+      h += '<button type="button" class="dia' + (eh ? " hoje" : "") + '" data-dia="' + k + '" aria-pressed="' + (st.dia === k) + '" aria-label="' + d + " de " + MESES[m] + ", " + es.length + " " + plural(es.length, "evento", "eventos") + '">' +
+        '<b>' + d + '</b><span class="pontos">' + pts + '</span></button>';
+    }
+    h += '</div>';
+    var lista = st.dia ? ev.filter(function (e) { return e.d === st.dia; }) : ev;
+    lista.sort(function (a, b) { return a.d < b.d ? -1 : a.d > b.d ? 1 : 0; });
+    h += '<h3 style="margin:0;font:700 15px/1.2 var(--f-display)">' + (st.dia ? "Em " + br(st.dia) : "Neste mês") + '</h3>';
+    h += lista.length ? '<ul class="agenda">' + lista.map(function (e) {
+      var dd = e.d.slice(8) + " " + SEMANA[pd(e.d).getDay()];
+      return '<li><a href="#concurso=' + e.c.id + '"><span class="dd">' + dd + '</span><span class="tp">' + TIPO[e.k] + '</span><span class="tx">' + esc(e.c.org) + '</span></a></li>';
+    }).join("") + '</ul>' : '<p style="margin:0;color:var(--muted)">Nenhum prazo ' + (st.dia ? "neste dia" : "neste mês") + ' com os filtros atuais.</p>';
+    $("cal").innerHTML = h;
+  }
+
+  // ---------------- página de um concurso
+  var CONFERIR = [
+    "Formação exigida e registro em conselho (CRM, OAB, CREA e outros), quando houver.",
+    "Valor da taxa e se você tem direito à isenção.",
+    "Local de prova e se a seleção tem outras etapas além da prova.",
+    "Vagas reservadas para pessoas com deficiência e para cotas.",
+    "Retificações do edital: prazos e vagas podem mudar depois da publicação."
+  ];
+  function renderDetalhe(c) {
+    var info = [];
+    if (c.vagas) info.push(["Vagas", c.vagas]);
+    if (c.sal) info.push(["Salário", c.sal]);
+    if (c.taxa) info.push(["Taxa de inscrição", c.taxa]);
+    if (c.banca) info.push(["Banca", c.banca]);
+    info.push(["Escolaridade", c.nivel.length ? c.nivel.map(function (n) { return NIVEL_LABEL[n]; }).join(", ") : "A definir"]);
+    if (c.esfera) info.push(["Esfera", c.esfera]);
+    var passos = [];
+    if (c.ini) passos.push(["Inscrições abrem", c.ini]);
+    if (c.fim) passos.push(["Inscrições terminam", c.fim]);
+    var pv = provaIso(c);
+    if (pv) passos.push(["Prova" + (c.prova && c.prova.toLowerCase().indexOf("provável") >= 0 ? " (data provável)" : ""), pv]);
+    var proximo = null;
+    passos.forEach(function (p) { if (!proximo && pd(p[1]) >= HOJE) proximo = p[0]; });
+    var linha = c.tipo === "previsto"
+      ? '<p style="margin:0;color:var(--muted)">Ainda sem edital publicado, então não há datas. ' + esc(c.previsaoNota || "") + '</p>'
+      : passos.length ? '<ol class="linha">' + passos.map(function (p) {
+          var d = pd(p[1]), cl = d < HOJE ? "passou" : p[0] === proximo ? "agora" : "";
+          return '<li class="' + cl + '"><span class="bola"></span><div><b>' + p[0] + '</b><small>' + br(p[1]) + ' · ' + relativo(d) + '</small></div></li>';
+        }).join("") + '</ol>'
+      : '<p style="margin:0;color:var(--muted)">As datas ainda não foram divulgadas. Confira no edital.</p>';
+    if (c.prova && !pv) linha += '<p style="margin:0;color:var(--muted)">Prova: ' + esc(c.prova) + '</p>';
+    var on = salvos.indexOf(c.id) >= 0;
+    return '<p class="voltar"><a class="btn" href="#">← Voltar à lista</a></p>' +
+      '<div class="det-card">' +
+        '<div><div class="tags" style="margin-bottom:10px">' + [c.esfera].filter(Boolean).concat(c.area).map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join("") + '</div>' +
+        '<h2>' + esc(c.org) + '</h2><p class="cargo" style="font-size:16px">' + esc(c.cargo || "") + '</p></div>' +
+        '<div class="status-faixa ' + c.s.cls + '"><span>' + esc(c.s.kick) + ' ' + esc(c.s.big) + '</span><span>' + esc(c.s.note) + '</span></div>' +
+        '<div class="acoes">' +
+          '<button type="button" class="btn" id="d-salvar" aria-pressed="' + on + '">' + (on ? "Salvo" : "Salvar") + '</button>' +
+          '<a class="btn" href="' + esc(zapHref(c)) + '" target="_blank" rel="noopener">Compartilhar no WhatsApp</a>' +
+          '<button type="button" class="btn" id="d-copiar">Copiar link</button>' +
+          (c.tipo === "previsto" ? '' : '<button type="button" class="btn" id="d-ics">Adicionar ao calendário</button>') +
+        '</div>' +
+        '<div><h3>Cronograma</h3>' + linha + '</div>' +
+        '<div><h3>Informações</h3><dl class="info">' + info.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join("") + '</dl></div>' +
+        (c.nota ? '<p class="nota">' + esc(c.nota) + '</p>' : '') +
+        '<div><h3>Antes de se inscrever, confira no edital</h3><ul class="check">' + CONFERIR.map(function (t) { return '<li>' + t + '</li>'; }).join("") + '</ul></div>' +
+        '<div><h3>Links</h3><div class="links">' +
+          (c.edital ? '<a class="btn pri" href="' + esc(c.edital) + '" target="_blank" rel="noopener">Edital e inscrição oficial ↗</a>' : '') +
+          '<a class="btn" href="' + esc(c.link) + '" target="_blank" rel="noopener">' + esc(c.linkTxt || "Matéria") + ' ↗</a></div>' +
+          (c.edital ? '' : '<p class="sel" style="margin:10px 0 0">O link oficial deste edital ainda não foi cadastrado. Procure no site do órgão ou da banca.</p>') + '</div>' +
+        '<p class="sel" style="margin:0">' + esc(selo(c)) + '</p>' +
+      '</div>';
+  }
+
+  // ---------------- rotas e eventos
+  function rota() {
+    var m = /^#concurso=([\w-]+)$/.exec(location.hash);
+    var c = m && POR_ID[m[1]];
+    var det = $("detalhe");
+    document.querySelector(".top").classList.toggle("compacto", !!c);
+    if (c) {
+      $("vista-lista").hidden = true; det.hidden = false; det.innerHTML = renderDetalhe(c);
+      document.title = c.org + " | Radar Concursos DF"; window.scrollTo(0, 0);
+      $("d-salvar").onclick = function () { alternarSalvo(c.id); det.innerHTML = renderDetalhe(c); ligarDetalhe(c); };
+      ligarDetalhe(c);
+    } else {
+      det.hidden = true; $("vista-lista").hidden = false; document.title = "Radar Concursos DF";
+      if (m) toast("Concurso não encontrado. Ele pode ter saído da lista.");
+    }
+  }
+  function ligarDetalhe(c) {
+    var s = $("d-salvar"); if (s) s.onclick = function () { alternarSalvo(c.id); $("detalhe").innerHTML = renderDetalhe(c); ligarDetalhe(c); };
+    var cp = $("d-copiar"); if (cp) cp.onclick = function () { copiar(urlDe(c)); };
+    var ic = $("d-ics"); if (ic) ic.onclick = function () { baixarIcs(c); };
+  }
+  function alternarSalvo(id) {
+    var i = salvos.indexOf(id);
+    if (i >= 0) salvos.splice(i, 1); else salvos.push(id);
+    persist();
+  }
+
   function renderChips() { chips($("f-sit"), SIT, "sit"); chips($("f-niv"), NIV, "niv"); }
+  function render() {
+    var cal = st.vista === "calendario";
+    $("list").hidden = cal; $("cal").hidden = !cal;
+    $("v-lista").setAttribute("aria-pressed", String(!cal)); $("v-cal").setAttribute("aria-pressed", String(cal));
+    renderSemana();
+    if (cal) { renderCal(); $("count").textContent = ordenados().length + " concursos nos filtros atuais"; }
+    else renderLista();
+  }
 
   document.addEventListener("click", function (e) {
     var ch = e.target.closest(".chip");
     if (ch) { st[ch.dataset.k] = ch.dataset.v; renderChips(); render(); return; }
     var sv = e.target.closest(".save");
-    if (sv) {
-      var i = salvos.indexOf(sv.dataset.id);
-      if (i >= 0) salvos.splice(i, 1); else salvos.push(sv.dataset.id);
-      persist(); render();
+    if (sv) { alternarSalvo(sv.dataset.id); render(); return; }
+    var vv = e.target.closest("[data-v]");
+    if (vv && vv.closest(".seg")) { st.vista = vv.dataset.v; render(); return; }
+    var nav = e.target.closest("[data-cal]");
+    if (nav) {
+      var n = +nav.dataset.cal;
+      if (n === 0) st.mes = { y: HOJE.getFullYear(), m: HOJE.getMonth() };
+      else { var d = new Date(st.mes.y, st.mes.m + n, 1); st.mes = { y: d.getFullYear(), m: d.getMonth() }; }
+      st.dia = null; render(); return;
     }
+    var di = e.target.closest("[data-dia]");
+    if (di) { st.dia = st.dia === di.dataset.dia ? null : di.dataset.dia; render(); }
   });
   $("q").addEventListener("input", function (e) { st.q = e.target.value.trim(); render(); });
   $("f-area").addEventListener("change", function (e) { st.area = e.target.value; render(); });
+  $("f-sal").addEventListener("change", function (e) { st.sal = +e.target.value; render(); });
   $("f-ord").addEventListener("change", function (e) { st.ord = e.target.value; render(); });
+  window.addEventListener("hashchange", rota);
 
-  renderChips(); render();
+  renderChips(); render(); rota();
 }
 
 fetch("dados.json", { cache: "no-cache" })
   .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-  .then(function (j) { iniciar(j.concursos || [], j.atualizado); })
-  .catch(function () {
+  .then(function (j) { iniciar(j.concursos || [], j); })
+  .catch(function (e) {
+    console.error(e);
     document.getElementById("list").innerHTML =
-      '<li class="empty"><b>Não consegui carregar os concursos</b>Se você abriu o arquivo direto do computador, rode "python3 -m http.server -d docs" e acesse localhost:8000.</li>';
+      '<li class="empty"><b>Não consegui carregar os concursos</b>Atualize a página em instantes. Se você abriu o arquivo direto do computador, rode "python3 -m http.server -d docs" e acesse localhost:8000.</li>';
   });
 </script>
+</body>
+</html>
