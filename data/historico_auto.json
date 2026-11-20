@@ -70,6 +70,54 @@
   "sal": "R$ 13.359,56",
   "vagas": "Cadastro reserva"
  },
+ "iges122": {
+  "banca": "IGESDF",
+  "cargo": "Técnico em Farmácia",
+  "fim": "2026-11-19",
+  "id": "iges122",
+  "ini": "2026-11-10",
+  "link": "https://processoseletivo.igesdf.org.br/vagas",
+  "org": "IGESDF · Edital 122/2026",
+  "prova": "Entre 25/11 e 18/12, conforme o cargo",
+  "sal": "R$ 2.294,50",
+  "vagas": "Cadastro reserva"
+ },
+ "iges123": {
+  "banca": "IGESDF",
+  "cargo": "Analista de TI III (Análise de Sistemas)",
+  "fim": "2026-11-19",
+  "id": "iges123",
+  "ini": "2026-11-10",
+  "link": "https://processoseletivo.igesdf.org.br/vagas",
+  "org": "IGESDF · Edital 123/2026",
+  "prova": "Entre 25/11 e 18/12, conforme o cargo",
+  "sal": "R$ 8.953,27",
+  "vagas": "Cadastro reserva"
+ },
+ "iges124": {
+  "banca": "IGESDF",
+  "cargo": "Médico Cirurgião do Aparelho Digestivo",
+  "fim": "2026-11-19",
+  "id": "iges124",
+  "ini": "2026-11-10",
+  "link": "https://processoseletivo.igesdf.org.br/vagas",
+  "org": "IGESDF · Edital 124/2026",
+  "prova": "Entre 25/11 e 18/12, conforme o cargo",
+  "sal": "R$ 13.359,56",
+  "vagas": "Cadastro reserva"
+ },
+ "iges125": {
+  "banca": "IGESDF",
+  "cargo": "Médico Plantonista (Atendimento ao Paciente Crítico)",
+  "fim": "2026-11-19",
+  "id": "iges125",
+  "ini": "2026-11-10",
+  "link": "https://processoseletivo.igesdf.org.br/vagas",
+  "org": "IGESDF · Edital 125/2026",
+  "prova": "Entre 25/11 e 18/12, conforme o cargo",
+  "sal": "R$ 13.359,56",
+  "vagas": "Cadastro reserva"
+ },
  "sedes": {
   "banca": "Quadrix",
   "cargo": "Técnico e Especialista em Desenvolvimento e Assistência Social",

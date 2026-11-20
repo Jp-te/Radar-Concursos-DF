@@ -1,7 +1,7 @@
 {
- "atualizado": "2026-11-20T12:27:32+00:00",
+ "atualizado": "2026-11-20T12:30:23+00:00",
  "coleta": {
-  "quando": "2026-11-20T12:27:32+00:00",
+  "quando": "2026-11-20T12:30:23+00:00",
   "fontes": [
    {
     "url": "https://concursosnobrasil.com/concursos/df/",
@@ -608,6 +608,7 @@
    "banca": "Cebraspe",
    "cargo": "Analista e Técnico",
    "esfera": "Distrito Federal",
+   "h": "b2e21ec8be",
    "id": "auto-f6942502",
    "link": "https://concursosnobrasil.com/concursos/df/2026/10/15/concurso-ibram-df-e-autorizado-com-100-vagas-para-analista-e-tecnico/",
    "linkTxt": "Matéria com detalhes do edital",
@@ -615,8 +616,7 @@
    "org": "IBRAM DF",
    "publicado": "2026-10-15",
    "titulo": "Concurso IBRAM DF é autorizado com 100 vagas para Analista e Técnico",
-   "vagas": "100 vagas",
-   "h": "b2e21ec8be"
+   "vagas": "100 vagas"
   }
  ],
  "historico": [
