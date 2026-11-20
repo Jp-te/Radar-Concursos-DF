@@ -1,0 +1,105 @@
+[
+ {
+  "k": [
+   "pmdf",
+   "policia militar"
+  ],
+  "org": "Polícia Militar do DF (PMDF)",
+  "ano": 2025,
+  "cargo": "Oficial (Curso de Formação de Oficiais)",
+  "banca": "Cebraspe",
+  "vagas": "147 vagas (49 imediatas e 98 de cadastro reserva)",
+  "sal": "R$ 8.007,76 (cadete) a R$ 17.034,85 (2º tenente)",
+  "periodo": "24/03 a 23/04/2025",
+  "prova": "01/06/2025",
+  "nota": "Taxa de inscrição de R$ 163.",
+  "link": "https://sbtnews.sbt.com.br/noticia/concurso-publico-2024/policia-militar-do-df-publica-edital-de-concurso-com-147-vagas-e-salarios-iniciais-de-ate-r-17-mil"
+ },
+ {
+  "k": [
+   "tjdft",
+   "tribunal de justica"
+  ],
+  "org": "Tribunal de Justiça do DF (TJDFT)",
+  "ano": 2022,
+  "cargo": "Analista e Técnico Judiciário",
+  "banca": "FGV",
+  "vagas": "112 vagas (88 analista, 24 técnico)",
+  "sal": "R$ 12.455,30 (analista) e R$ 7.591,36 (técnico)",
+  "periodo": "07/02 a 14/03/2022",
+  "prova": "29/05/2022",
+  "nota": "Taxa de R$ 80 (médio) e R$ 120 (superior).",
+  "link": "https://www.direcaoconcursos.com.br/noticias/concurso-tjdft-edital-publicado/"
+ },
+ {
+  "k": [
+   "tjdft",
+   "tribunal de justica"
+  ],
+  "org": "Tribunal de Justiça do DF (TJDFT)",
+  "ano": 2015,
+  "cargo": "Analista e Técnico Judiciário",
+  "banca": "Cebraspe",
+  "vagas": "80 vagas",
+  "sal": "R$ 8.863,84 (analista) e R$ 5.425,79 (técnico)",
+  "link": "https://ceisc.com.br/blog/post/confira-como-foi-o-ultimo-concurso-do-tribunal-de-justica-do-dft"
+ },
+ {
+  "k": [
+   "ses df",
+   "secretaria de saude"
+  ],
+  "org": "Secretaria de Saúde (SES-DF)",
+  "ano": 2022,
+  "cargo": "Médico, enfermeiro e cirurgião-dentista (editais 13 a 15/2022)",
+  "banca": "IBFC",
+  "vagas": "381 vagas e cadastro reserva",
+  "sal": "Até R$ 12.654,00",
+  "periodo": "25/04 a 23/05/2022",
+  "prova": "26/06/2022",
+  "nota": "Taxas de R$ 90 a R$ 130, conforme o cargo. Validade de 2 anos.",
+  "link": "https://concursosnobrasil.com/concursos/df/2022/03/28/concurso-ses-df-381-vagas-em-tres-editais-ate-r-126-mil/"
+ },
+ {
+  "k": [
+   "sefaz",
+   "secretaria de economia",
+   "seec"
+  ],
+  "org": "Secretaria de Economia (SEEC-DF) · Sefaz",
+  "ano": 2019,
+  "cargo": "Auditor Fiscal",
+  "banca": "Cebraspe",
+  "vagas": "120 vagas (40 imediatas e 80 de cadastro reserva)",
+  "inscritos": "15.949 inscritos, cerca de 399 por vaga imediata",
+  "nota": "Edital publicado em 17/09/2019; prova discursiva em 04/07/2021; homologação em 16/12/2021. Concorrência caiu para cerca de 258 por vaga com as abstenções.",
+  "link": "https://www.estrategiaconcursos.com.br/blog/concurso-sefaz-df"
+ },
+ {
+  "k": [
+   "pcdf",
+   "policia civil"
+  ],
+  "org": "Polícia Civil do DF (PCDF)",
+  "ano": 2014,
+  "cargo": "Delegado de Polícia",
+  "banca": "Fundação Universa",
+  "vagas": "100 vagas imediatas e 100 de cadastro reserva",
+  "sal": "R$ 15.370,64",
+  "link": "https://concursosnobrasil.com/concurso/concurso-pcdf/"
+ },
+ {
+  "k": [
+   "pcdf",
+   "policia civil"
+  ],
+  "org": "Polícia Civil do DF (PCDF)",
+  "ano": 2004,
+  "cargo": "Agente de Custódia (último concurso do cargo)",
+  "banca": "NCE/UFRJ",
+  "vagas": "66 vagas",
+  "sal": "R$ 4,2 mil",
+  "nota": "Exigia ensino médio.",
+  "link": "https://concursosnobrasil.com/concurso/concurso-pcdf/"
+ }
+]

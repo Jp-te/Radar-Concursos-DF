@@ -174,6 +174,13 @@ select {
 .info div { min-width: 0; }
 .info dt { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 3px; }
 .info dd { margin: 0; font-weight: 500; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.tag.mudou { background: var(--warn-bg); color: var(--warn); font-weight: 600; }
+.mud, .hist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.mud li { background: var(--warn-bg); color: var(--warn); border-radius: 12px; padding: 10px 14px; font-size: 14px; }
+.mud small { display: block; opacity: .85; }
+.hist li { background: var(--bg); border-radius: 12px; padding: 12px 14px; font-size: 14px; display: grid; gap: 3px; }
+.hist b { font-size: 15px; }
+.hist span { color: var(--muted); }
 .nota { margin: 0; font-size: 13.5px; color: var(--muted); background: var(--bg); padding: 11px 14px; border-radius: 12px; }
 .foot { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-size: 14px; }
 .foot a { font-weight: 600; }
@@ -567,8 +574,65 @@ function iniciar(DATA, meta) {
   // ---------------- selo de conferência
   function selo(c) {
     if (c.conferido) return "Conferido em " + br(c.conferido);
-    if (c.auto) return "Detectado automaticamente" + (c.publicado ? " (matéria de " + br(c.publicado) + ")" : "");
+    if (c.auto) return (c.lido === "ia" ? "Lido por IA e conferido com o texto da matéria" : "Detectado automaticamente") + (c.publicado ? " (matéria de " + br(c.publicado) + ")" : "");
     return "";
+  }
+
+  // ---------------- contador de acessos (GoatCounter, sem cookies)
+  var CONTADOR = typeof meta.contador === "string" && /^[a-z0-9-]{2,40}$/.test(meta.contador) ? meta.contador : "";
+  if (CONTADOR) {
+    var gc = document.createElement("script");
+    gc.async = true; gc.src = "https://gc.zgo.at/count.js";
+    gc.setAttribute("data-goatcounter", "https://" + CONTADOR + ".goatcounter.com/count");
+    document.head.appendChild(gc);
+    $("coleta-info").textContent += " Contamos os acessos sem cookies e sem identificar ninguém.";
+  }
+  function contar(caminho, titulo, evento) {
+    try { if (CONTADOR && window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: caminho, title: titulo, event: !!evento }); } catch (e) {}
+  }
+
+  // ---------------- mudanças recentes e histórico
+  var CAMPOS_MUD = { ini: "Início das inscrições", fim: "Fim das inscrições", prova: "Prova", vagas: "Vagas", sal: "Salário" };
+  function valorMud(campo, v) {
+    if (v == null) return "sem informação";
+    return (campo === "ini" || campo === "fim") && /^\d{4}-\d{2}-\d{2}$/.test(v) ? br(v) : String(v);
+  }
+  function mudancasDe(c) { return (c.mudancas || []).filter(function (m) { return CAMPOS_MUD[m.campo]; }); }
+  function ultimaMud(c) {
+    var l = mudancasDe(c); if (!l.length) return null;
+    return l.map(function (m) { return m.em; }).sort().pop();
+  }
+  function norm(t) { return String(t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim(); }
+  var HIST = Array.isArray(meta.historico) ? meta.historico : [];
+  function historicoDe(c) {
+    var no = norm(c.org);
+    return HIST.filter(function (h) {
+      if (h.id === c.id) return false;
+      return (h.k || []).some(function (k) { return k && (no.indexOf(k) >= 0 || (no.length >= 4 && k.indexOf(no) >= 0)); });
+    }).sort(function (a, b) { return b.ano - a.ano; }).slice(0, 6);
+  }
+  function blocoMudancas(c) {
+    var l = mudancasDe(c); if (!l.length) return "";
+    return '<div><h3>Alterações recentes</h3><ul class="mud">' + l.slice().reverse().map(function (m) {
+      return '<li><b>' + esc(CAMPOS_MUD[m.campo]) + ':</b> ' + esc(valorMud(m.campo, m.de)) + ' → ' + esc(valorMud(m.campo, m.para)) +
+        '<small>Alterado em ' + br(m.em) + '. Confira no edital atualizado.</small></li>';
+    }).join("") + '</ul></div>';
+  }
+  function blocoHistorico(c) {
+    var l = historicoDe(c); if (!l.length) return "";
+    return '<div><h3>Edições anteriores deste órgão</h3><ul class="hist">' + l.map(function (h) {
+      var periodo = h.periodo || (h.ini && h.fim ? br(h.ini) + " a " + br(h.fim) : h.fim ? "até " + br(h.fim) : "");
+      var linhas = [];
+      if (h.cargo) linhas.push(esc(h.cargo));
+      if (h.vagas) linhas.push("Vagas: " + esc(h.vagas));
+      if (h.sal) linhas.push("Salário: " + esc(h.sal));
+      if (h.inscritos) linhas.push("Concorrência: " + esc(h.inscritos));
+      if (periodo) linhas.push("Inscrições: " + esc(periodo));
+      if (h.prova) linhas.push("Prova: " + esc(h.prova));
+      if (h.nota) linhas.push(esc(h.nota));
+      var fonte = h.link && /^https?:\/\//.test(h.link) ? ' <a href="' + esc(h.link) + '" target="_blank" rel="noopener">Fonte ↗</a>' : "";
+      return '<li><b>' + h.ano + (h.banca ? ' · ' + esc(h.banca) : '') + '</b>' + linhas.map(function (t) { return '<span>' + t + '</span>'; }).join("") + (fonte ? '<span>' + fonte + '</span>' : '') + '</li>';
+    }).join("") + '</ul><p class="sel" style="margin:8px 0 0">Dados de editais anteriores, só para dar uma ideia do que esperar. O próximo concurso pode ser diferente.</p></div>';
   }
 
   // ---------------- lista
@@ -588,7 +652,7 @@ function iniciar(DATA, meta) {
       '<div class="body">' +
         '<div class="head"><div><h2 class="org">' + esc(c.org) + '</h2><p class="cargo">' + esc(c.cargo || "") + '</p></div>' +
         '<button type="button" class="save" data-id="' + c.id + '" aria-pressed="' + on + '">' + (on ? "Salvo" : "Salvar") + '</button></div>' +
-        '<div class="tags">' + tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join("") + '</div>' +
+        '<div class="tags">' + (ultimaMud(c) ? '<span class="tag mudou" title="Alguma informação mudou. Veja em Ver detalhes.">Atualizado em ' + br(ultimaMud(c)).slice(0, 5) + '</span>' : '') + tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join("") + '</div>' +
         '<dl class="info">' + info.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join("") + '</dl>' +
         (c.nota || c.auto ? '<p class="nota">' + esc(c.nota || "Dados extraídos automaticamente da matéria. Confira prazos, vagas e requisitos no edital.") + '</p>' : '') +
         '<div class="foot"><a class="det" href="#concurso=' + c.id + '">Ver detalhes</a>' +
@@ -721,9 +785,11 @@ function iniciar(DATA, meta) {
           '<button type="button" class="btn" id="d-copiar">Copiar link</button>' +
           (c.tipo === "previsto" ? '' : '<button type="button" class="btn" id="d-ics">Adicionar ao calendário</button>') +
         '</div>' +
+        blocoMudancas(c) +
         '<div><h3>Cronograma</h3>' + linha + '</div>' +
         '<div><h3>Informações</h3><dl class="info">' + info.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join("") + '</dl></div>' +
         (c.nota ? '<p class="nota">' + esc(c.nota) + '</p>' : '') +
+        blocoHistorico(c) +
         '<div><h3>Antes de se inscrever, confira no edital</h3><ul class="check">' + CONFERIR.map(function (t) { return '<li>' + t + '</li>'; }).join("") + '</ul></div>' +
         '<div><h3>Links</h3><div class="links">' +
           (c.edital ? '<a class="btn pri" href="' + esc(c.edital) + '" target="_blank" rel="noopener">Edital e inscrição oficial ↗</a>' : '') +
@@ -742,6 +808,7 @@ function iniciar(DATA, meta) {
     if (c) {
       $("vista-lista").hidden = true; det.hidden = false; det.innerHTML = renderDetalhe(c);
       document.title = c.org + " | Radar Concursos DF"; window.scrollTo(0, 0);
+      contar("concurso/" + c.id, c.org, false);
       $("d-salvar").onclick = function () { alternarSalvo(c.id); det.innerHTML = renderDetalhe(c); ligarDetalhe(c); };
       ligarDetalhe(c);
     } else {
@@ -751,8 +818,8 @@ function iniciar(DATA, meta) {
   }
   function ligarDetalhe(c) {
     var s = $("d-salvar"); if (s) s.onclick = function () { alternarSalvo(c.id); $("detalhe").innerHTML = renderDetalhe(c); ligarDetalhe(c); };
-    var cp = $("d-copiar"); if (cp) cp.onclick = function () { copiar(urlDe(c)); };
-    var ic = $("d-ics"); if (ic) ic.onclick = function () { baixarIcs(c); };
+    var cp = $("d-copiar"); if (cp) cp.onclick = function () { copiar(urlDe(c)); contar("copiar-link/" + c.id, c.org, true); };
+    var ic = $("d-ics"); if (ic) ic.onclick = function () { baixarIcs(c); contar("calendario/" + c.id, c.org, true); };
   }
   function alternarSalvo(id) {
     var i = salvos.indexOf(id);
@@ -773,6 +840,8 @@ function iniciar(DATA, meta) {
   document.addEventListener("click", function (e) {
     var ch = e.target.closest(".chip");
     if (ch) { st[ch.dataset.k] = ch.dataset.v; renderChips(); render(); return; }
+    var zap = e.target.closest("a.wa, a[href^='https://wa.me/']");
+    if (zap) { var cardEl = zap.closest(".card"), idz = cardEl && cardEl.querySelector(".save") ? cardEl.querySelector(".save").dataset.id : (/^#concurso=([\w-]+)$/.exec(location.hash) || [])[1]; if (idz) contar("whatsapp/" + idz, idz, true); }
     var sv = e.target.closest(".save");
     if (sv) { alternarSalvo(sv.dataset.id); render(); return; }
     var vv = e.target.closest("[data-v]");

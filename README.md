@@ -50,6 +50,33 @@ O robô pode avisar quando um concurso novo entra na lista e lembrar 3 dias, 1 d
 
 Sem os dois segredos, nada é enviado e o resto funciona normalmente.
 
+## Aviso de mudanças
+
+Todo dia o robô compara a lista nova com a publicada antes. Se o fim das inscrições, o início, a prova, as vagas ou o salário de um concurso mudarem, o site mostra a etiqueta **Atualizado em dd/mm** no cartão e a lista "Alterações recentes" (de → para) na página do concurso, por 21 dias. Com o Telegram ligado, o canal também recebe o aviso. Para as matérias detectadas automaticamente, o robô relê a matéria a cada dia e só reinterpreta quando o texto mudou. Um dado que some não vira alteração, só valor novo ou diferente.
+
+## Histórico dos órgãos
+
+Na página de cada concurso aparece "Edições anteriores deste órgão", com banca, vagas, salário, período e fonte.
+
+- `data/historico.json`: edições passadas cadastradas à mão (cada uma com `k`, palavras que ligam ao órgão, `org`, `ano`, `link` da fonte e o que mais souber).
+- `data/historico_auto.json`: o robô guarda aqui todo concurso cujas inscrições terminaram, para o histórico crescer sozinho.
+
+## Leitura por IA (opcional)
+
+Com a chave `ANTHROPIC_API_KEY`, um modelo lê cada matéria nova (ou que mudou) e extrai datas, vagas, salário, banca, escolaridade e área. O robô confere cada dado contra o texto da matéria, e o que não aparece na matéria é descartado e substituído pela leitura por regras. Sem a chave, nada muda.
+
+1. Crie uma chave em console.anthropic.com (conta e saldo da API são separados do Claude do dia a dia; o uso aqui é pequeno, no máximo 20 matérias por coleta).
+2. No repositório: **Settings → Secrets and variables → Actions → New repository secret**, nome `ANTHROPIC_API_KEY`.
+3. Opcional: segredo `ANTHROPIC_MODEL` não é lido; para trocar o modelo, edite `IA_MODELO_PADRAO` em `scripts/coletar.py`.
+
+## Contador de acessos (GoatCounter)
+
+Gratuito, sem cookies, sem dados pessoais.
+
+1. Crie uma conta em goatcounter.com e escolha um código (por exemplo `radarconcursosdf`, que dá `radarconcursosdf.goatcounter.com`).
+2. Em `data/manual.json`, preencha `"contador": "radarconcursosdf"`.
+3. No painel do GoatCounter você vê visitas, de onde vieram e, em "Pages", quais concursos foram abertos (`concurso/ID`). Os cliques em WhatsApp, copiar link e calendário aparecem como eventos.
+
 ## Endereço próprio (opcional)
 
 1. Registre um domínio (por exemplo em registro.br).
@@ -63,7 +90,8 @@ Sem os dois segredos, nada é enviado e o resto funciona normalmente.
 | --- | --- |
 | `data/manual.json` | Concursos que você mantém à mão: previstos, editais que o coletor não entende bem, correções. Campos úteis: `conferido` (data da última conferência), `edital` (link oficial), `telegram` (link do canal). |
 | `scripts/coletar.py` | Lê as matérias novas de concursos do DF, extrai prazo, vagas, salário, banca, escolaridade e área, e grava em `data/auto.json`. |
-| `data/auto.json` | Memória do coletor entre as execuções (o robô atualiza). |
+| `data/auto.json`, `data/mudancas.json`, `data/historico_auto.json` | Memória do robô entre as execuções (ele atualiza). |
+| `data/historico.json` | Edições anteriores que você cadastra à mão. |
 | `docs/dados.json` | Resultado final que o site lê (manual + automático). |
 | `docs/index.html` | O site. Calcula situação e contagem de dias com a data de quem abre. |
 | `docs/manifest.webmanifest`, `docs/sw.js`, `docs/icon-*.png` | Fazem o site virar app instalável e abrir offline. |

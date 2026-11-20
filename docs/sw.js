@@ -1,6 +1,6 @@
 // Service worker do Radar Concursos DF: permite abrir o app sem internet.
 // Página e dados: tenta a rede primeiro e usa a cópia guardada se estiver offline.
-var VERSAO = "radar-v3";
+var VERSAO = "radar-v4";
 var BASE = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", function (e) {

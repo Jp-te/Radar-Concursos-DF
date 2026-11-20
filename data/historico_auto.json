@@ -1,0 +1,97 @@
+{
+ "camara": {
+  "banca": "Cebraspe",
+  "cargo": "Cargos de nível superior, lotação em Brasília",
+  "fim": "2026-11-17",
+  "id": "camara",
+  "ini": "2026-10-15",
+  "link": "https://concursosnobrasil.com/concursos/df/2026/10/02/camara-dos-deputados-publica-edital-de-concurso-com-184-vagas-e-iniciais-de-r-32-mil/",
+  "org": "Câmara dos Deputados",
+  "prova": "17/01/2027",
+  "sal": "R$ 32.070,88",
+  "vagas": "66 vagas + 118 de cadastro reserva"
+ },
+ "cgu": {
+  "banca": "A confirmar no edital",
+  "cargo": "Secretaria Executiva, nível superior",
+  "fim": "2026-11-04",
+  "id": "cgu",
+  "link": "https://valorfinal.com.br/concursos/edital/controladoria-geral-da-uniao__1-2026",
+  "org": "Controladoria-Geral da União (CGU)",
+  "prova": "Marcada, consulte o edital",
+  "sal": "Até R$ 20.000",
+  "vagas": "105 + cadastro reserva"
+ },
+ "iges118": {
+  "banca": "IGESDF",
+  "cargo": "Terapeuta Ocupacional",
+  "fim": "2026-11-13",
+  "id": "iges118",
+  "ini": "2026-11-04",
+  "link": "https://processoseletivo.igesdf.org.br/vagas",
+  "org": "IGESDF · Edital 118/2026",
+  "prova": "11/12/2026",
+  "sal": "R$ 5.259,97",
+  "vagas": "Cadastro reserva"
+ },
+ "iges119": {
+  "banca": "IGESDF",
+  "cargo": "Médico Cirurgião Geral",
+  "fim": "2026-11-13",
+  "id": "iges119",
+  "ini": "2026-11-04",
+  "link": "https://processoseletivo.igesdf.org.br/vagas",
+  "org": "IGESDF · Edital 119/2026",
+  "prova": "19/11/2026",
+  "sal": "R$ 13.359,56",
+  "vagas": "Cadastro reserva"
+ },
+ "iges120": {
+  "banca": "IGESDF",
+  "cargo": "Enfermeiro (Centro Obstétrico)",
+  "fim": "2026-11-18",
+  "id": "iges120",
+  "ini": "2026-11-09",
+  "link": "https://processoseletivo.igesdf.org.br/vagas",
+  "org": "IGESDF · Edital 120/2026",
+  "prova": "Entre 25/11 e 18/12, conforme o cargo",
+  "sal": "R$ 4.894,57",
+  "vagas": "Cadastro reserva"
+ },
+ "iges121": {
+  "banca": "IGESDF",
+  "cargo": "Médico Otorrinolaringologista",
+  "fim": "2026-11-18",
+  "id": "iges121",
+  "ini": "2026-11-09",
+  "link": "https://processoseletivo.igesdf.org.br/vagas",
+  "org": "IGESDF · Edital 121/2026",
+  "prova": "Entre 25/11 e 18/12, conforme o cargo",
+  "sal": "R$ 13.359,56",
+  "vagas": "Cadastro reserva"
+ },
+ "sedes": {
+  "banca": "Quadrix",
+  "cargo": "Técnico e Especialista em Desenvolvimento e Assistência Social",
+  "fim": "2026-07-13",
+  "id": "sedes",
+  "ini": "2026-06-09",
+  "link": "https://blog.grancursosonline.com.br/concursos-df",
+  "org": "SEDES-DF · Secretaria de Desenvolvimento Social",
+  "prova": "Aplicada em 06/09/2026",
+  "sal": "R$ 4.320,16 a R$ 6.071,09",
+  "vagas": "1.197 + 3.591 de cadastro reserva"
+ },
+ "tcdf": {
+  "banca": "Cebraspe",
+  "cargo": "Analista Administrativo de Controle Externo (Gestão)",
+  "fim": "2026-09-17",
+  "id": "tcdf",
+  "ini": "2026-08-26",
+  "link": "https://blog.grancursosonline.com.br/concursos-df",
+  "org": "Tribunal de Contas do DF (TCDF)",
+  "prova": "22/11/2026",
+  "sal": "R$ 14.990,41",
+  "vagas": "10 imediatas + cadastro reserva"
+ }
+}
