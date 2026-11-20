@@ -1,7 +1,7 @@
 {
- "atualizado": "2026-11-20T12:30:23+00:00",
+ "atualizado": "2026-11-20T12:37:58+00:00",
  "coleta": {
-  "quando": "2026-11-20T12:30:23+00:00",
+  "quando": "2026-11-20T12:37:58+00:00",
   "fontes": [
    {
     "url": "https://concursosnobrasil.com/concursos/df/",
@@ -914,5 +914,6 @@
    "prova": "Aplicada em 06/09/2026",
    "link": "https://blog.grancursosonline.com.br/concursos-df"
   }
- ]
+ ],
+ "contador": "jotasv"
 }
